@@ -49,11 +49,13 @@ import { u } from '../lib/url';
     place-items: center;
     overflow: hidden;
     border-bottom: 1px solid var(--gold);
+    padding-bottom: 16px;
   }
 
   .stage {
     position: relative;
-    width: min(100%, calc((100svh - var(--header-h)) * 16 / 9));
+    /* kept to about three-quarters of the screen height, and never wider than 1040px */
+    width: min(100%, 1040px, calc((75svh - var(--header-h)) * 16 / 9));
     aspect-ratio: 16 / 9;
   }
   .layer { position: absolute; inset: 0; width: 100%; height: 100%; }
