@@ -1,0 +1,17 @@
+---
+interface Props { eyebrow?: string; title: string; lede?: string; sanskrit?: string }
+const { eyebrow, title, lede, sanskrit } = Astro.props;
+---
+<section class="page-intro">
+  <div class="container prose">
+    {sanskrit && <p class="sanskrit dev" lang="sa">{sanskrit}</p>}
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1>{title}</h1>
+    {lede && <p class="lede">{lede}</p>}
+  </div>
+</section>
+<style>
+  .page-intro { padding-block: clamp(36px, 6vw, 64px) clamp(16px, 3vw, 28px); }
+  .dev { font-size: 22px; margin-bottom: 8px; }
+  .page-intro .lede:last-child { margin-bottom: 0; }
+</style>

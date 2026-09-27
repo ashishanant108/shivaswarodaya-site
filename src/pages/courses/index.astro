@@ -1,0 +1,14 @@
+---
+import { u } from '../../lib/url';
+import Base from '../../layouts/Base.astro';
+import PageIntro from '../../components/PageIntro.astro';
+---
+<Base title="Courses">
+  <PageIntro eyebrow="Learn" title="Courses" lede="Begin with the free seven-day course, then continue with the foundation course." />
+  <section class="section" style="padding-top:0">
+    <div class="container prose">
+      <p><a class="btn btn-primary" href={u('/courses/meet-your-swara')}>Meet your Swara · free</a></p>
+      <p><a class="btn btn-ghost" href={u('/courses/swara-yoga-sadhana')}>Swara Yoga Sadhana · foundation course</a></p>
+    </div>
+  </section>
+</Base>

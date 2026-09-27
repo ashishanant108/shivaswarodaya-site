@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import { contactEmail } from '../data/site';
+---
+<Base title="Contact" description="Write to Shiva Swarodaya with questions about Swara Yoga and the courses with Ma Shakti Devpriya.">
+  <PageIntro eyebrow="Write to us" title="Contact" lede="For questions about the courses or the teaching." />
+  <section class="section" style="padding-top: 8px">
+    <div class="container prose">
+      {contactEmail
+        ? <p>Email: <a href={`mailto:${contactEmail}`}>{contactEmail}</a></p>
+        : <p class="draft-note">Draft: a contact form (for example Formspree or Netlify Forms) and the contact email will go here.</p>}
+      <h2 style="margin-top: 32px; font-size: 24px">Follow</h2>
+      <p>New videos and course dates are shared here first.</p>
+      <SocialLinks />
+    </div>
+  </section>
+</Base>

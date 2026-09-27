@@ -1,0 +1,39 @@
+---
+/**
+ * Social links. Edit the links in src/data/site.ts.
+ * Icons are simple generic symbols with visible labels (not the platforms'
+ * trademarked logos). To use official logos later, download them from each
+ * platform's brand resources page and swap the <svg> below.
+ */
+import { social } from '../data/site';
+interface Props { tone?: 'light' | 'dark'; showLabels?: boolean }
+const { tone = 'light', showLabels = true } = Astro.props;
+const links = social.filter((s) => s.href);
+const icons: Record<string, string> = {
+  // generic symbols: play button, camera, people, chat bubble
+  youtube: '<circle cx="12" cy="12" r="8.5"/><path d="M10.2 8.8v6.4l5.2-3.2z" fill="currentColor" stroke="none"/>',
+  instagram: '<path d="M4 8.5h3l1.5-2h7l1.5 2h3v10H4z"/><circle cx="12" cy="13.2" r="3.2"/>',
+  facebook: '<circle cx="9" cy="9" r="3"/><path d="M3.5 18.5c.6-3 2.8-4.6 5.5-4.6s4.9 1.6 5.5 4.6"/><circle cx="16.5" cy="9.5" r="2.4"/><path d="M15.6 14c2.3-.2 4.3 1.2 4.9 4"/>',
+  whatsapp: '<path d="M5 5.5h14v10H10l-4 3.5v-3.5H5z"/>',
+};
+---
+{links.length > 0 && (
+  <ul class:list={['social', tone]} aria-label="Social media">
+    {links.map((s) => (
+      <li>
+        <a href={s.href} target={s.href.startsWith('http') ? '_blank' : undefined} rel={s.href.startsWith('http') ? 'noopener' : undefined} aria-label={showLabels ? undefined : s.label}>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true" set:html={icons[s.id]} />
+          {showLabels && <span>{s.label}</span>}
+        </a>
+      </li>
+    ))}
+  </ul>
+)}
+<style>
+  .social { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 10px; }
+  .social a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 14px; border-radius: 999px; text-decoration: none; font: 400 14px/1 var(--font-ui); transition: background-color .2s, color .2s; }
+  .light a { color: var(--kumkum); border: 1px solid var(--gold-line); }
+  .light a:hover { background: var(--stone-2); }
+  .dark a { color: #E3D8C8; border: 1px solid #4A3C33; }
+  .dark a:hover { color: var(--gold-light); border-color: var(--gold); }
+</style>

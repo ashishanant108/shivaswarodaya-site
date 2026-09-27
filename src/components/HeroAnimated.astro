@@ -1,0 +1,117 @@
+---
+import { u } from '../lib/url';
+/**
+ * Home hero: the original banner, revealed in three stages.
+ *   1. 0.2–1.2s  A gold ring draws around the emblem while the logo turns
+ *                 into place on a black screen.
+ *   2. 1.2–2.4s  Ma's portrait and her name appear together, side by side.
+ *   3. 2.0–4.5s  The golden elements (lotus, glitter, light, gold bars) bloom
+ *                 outward from the logo, overlapping the end of step 2,
+ *                 ending on the complete banner at 4.5s.
+ *
+ * All layers are full-size (1600 × 900) transparent images cut from the
+ * banner, so they line up exactly. They live in public/images/hero/.
+ * With a high-resolution banner, re-export the same four files at the same
+ * 16:9 size (ideally from the designer's layered file) and keep the names.
+ *
+ * Pure CSS: works without JavaScript; skipped for visitors who prefer
+ * reduced motion.
+ */
+---
+<section class="hero" data-hero aria-label="Ma Shakti Devpriya">
+  <div class="stage">
+    <img class="layer gold" src={u('/images/hero/banner-full.webp')} alt="" width="1600" height="900" fetchpriority="high" />
+    <svg class="ring" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="98" pathLength="1" /></svg>
+    <img class="layer logo" src={u('/images/hero/layer-logo.webp')} alt="" width="1600" height="900" fetchpriority="high" />
+    <img class="layer ma" src={u('/images/hero/layer-ma.webp')} alt="" width="1600" height="900" />
+    <img class="layer name" src={u('/images/hero/layer-name.webp')} alt="" width="1600" height="900" />
+    <p class="sr-only">Ma Shakti Devpriya</p>
+  </div>
+  <a class="cue" href="#intro" aria-label="Scroll to introduction"><span></span></a>
+</section>
+
+<style>
+  @property --bloom {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 0%;
+  }
+
+  .hero {
+    --t-logo: .2s;   /* step 1: 1.0s, finishes at 1.2s */
+    --t-pair: 1.2s;  /* step 2: 1.2s, finishes at 2.4s */
+    --t-gold: 2.0s;  /* step 3: 2.5s, overlaps step 2 by 0.4s, finishes at 4.5s */
+    --t-cue: 4.5s;
+    position: relative;
+    background: #000;
+    padding-top: var(--header-h);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--gold);
+  }
+
+  .stage {
+    position: relative;
+    width: min(100%, calc((100svh - var(--header-h)) * 16 / 9));
+    aspect-ratio: 16 / 9;
+  }
+  .layer { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  /* 1 · logo on black */
+  .logo {
+    opacity: 0;
+    transform: rotate(-60deg) scale(.82);
+    transform-origin: 44.06% 55.78%; /* centre of the emblem */
+    animation: logo-in 1s cubic-bezier(.25, .7, .25, 1) var(--t-logo) forwards;
+  }
+  /* thin gold ring that draws around the emblem, then gives way to the banner */
+  .ring {
+    position: absolute; left: 33.31%; top: 36.67%; width: 21.5%; aspect-ratio: 1;
+    transform: rotate(-90deg); overflow: visible; pointer-events: none;
+    animation: ring-out .8s ease var(--t-gold) forwards;
+  }
+  .ring circle { fill: none; stroke: #D9BC82; stroke-width: .7; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1s ease-in-out var(--t-logo) forwards; }
+
+  /* 2 · Ma and her name, together */
+  .ma, .name { opacity: 0; animation: pair-in 1.2s cubic-bezier(.2, .7, .2, 1) var(--t-pair) forwards; }
+  .ma { --dx: -1.6%; }
+  .name { --dx: 1.6%; }
+
+  /* 3 · golden elements bloom out from the logo */
+  .gold {
+    opacity: 0;
+    -webkit-mask-image: radial-gradient(circle at 44% 56%, #000 var(--bloom), transparent calc(var(--bloom) + 18%));
+            mask-image: radial-gradient(circle at 44% 56%, #000 var(--bloom), transparent calc(var(--bloom) + 18%));
+    animation: gold-in 2.5s ease-out var(--t-gold) forwards;
+  }
+
+  .cue { position: absolute; left: 50%; bottom: 18px; width: 44px; height: 44px; margin-left: -22px; display: grid; place-items: center; opacity: 0; animation: fade 1s ease var(--t-cue) forwards; }
+  .cue span { width: 1px; height: 26px; background: linear-gradient(var(--gold-soft), transparent); animation: cue 2.4s ease-in-out calc(var(--t-cue) + 1s) infinite; }
+
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  @keyframes logo-in { 0% { opacity: 0; } 40% { opacity: 1; } 100% { opacity: 1; transform: none; } }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes ring-out { to { opacity: 0; } }
+  @keyframes pair-in { from { opacity: 0; transform: translateX(var(--dx)); } to { opacity: 1; transform: none; } }
+  @keyframes gold-in {
+    0% { opacity: 1; --bloom: 0%; }
+    100% { opacity: 1; --bloom: 130%; }
+  }
+  @keyframes fade { to { opacity: 1; } }
+  @keyframes cue { 0%, 100% { transform: translateY(0); opacity: .5; } 50% { transform: translateY(8px); opacity: 1; } }
+
+  /* Phones: the full banner at screen width */
+  @media (max-width: 820px) {
+    .stage { width: 100%; }
+    .hero { padding-bottom: 12px; }
+    .cue { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo, .ma, .name, .gold, .cue, .cue span { animation: none !important; opacity: 1 !important; transform: none !important; }
+    .ring { display: none; }
+    .gold { -webkit-mask-image: none; mask-image: none; }
+  }
+</style>

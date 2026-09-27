@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+
+const videos = (await getCollection('videos')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Videos" description="Short introductions to Swara Yoga and the Shiva Swarodaya by Ma Shakti Devpriya.">
+  <PageIntro eyebrow="Watch" title="Videos" lede="Short introductions to Swara Yoga on YouTube." />
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      {videos.length === 0 && (
+        <p class="draft-note">Draft page. Add each video as a file in src/content/videos (see README). They will appear here automatically.</p>
+      )}
+      <ul class="grid">
+        {videos.map((v) => (
+          <li>
+            <a href={`https://www.youtube.com/watch?v=${v.data.youtubeId}`} target="_blank" rel="noopener">
+              <img src={`https://i.ytimg.com/vi/${v.data.youtubeId}/hqdefault.jpg`} alt="" width="480" height="360" loading="lazy" />
+              <h2>{v.data.title}</h2>
+            </a>
+            <p>{v.data.summary}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 36px 28px; }
+  .grid a { text-decoration: none; color: inherit; }
+  .grid img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; margin-bottom: 14px; }
+  .grid h2 { font-size: 21px; margin-bottom: 6px; }
+  .grid p { color: var(--muted); font-size: 16px; }
+</style>

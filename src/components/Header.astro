@@ -1,0 +1,114 @@
+---
+import { u, stripBase } from '../lib/url';
+interface Props { overHero?: boolean }
+const { overHero = false } = Astro.props;
+const path = stripBase(Astro.url.pathname);
+
+const links = [
+  { href: '/about', label: 'About' },
+  { href: '/lineage', label: 'Lineage' },
+  { href: '/courses', label: 'Courses' },
+  { href: '/videos', label: 'Videos' },
+  { href: '/calendar', label: 'Calendar' },
+  { href: '/contact', label: 'Contact' },
+];
+const isActive = (href: string) => path === href || path.startsWith(href + '/');
+---
+<header class:list={['site-header', { 'over-hero': overHero, solid: !overHero }]} id="site-header">
+  <div class="bar container">
+    <a href={u('/')} class="brand" aria-label="Shiva Swarodaya home">
+      <img src={u('/images/logo-160.webp')} alt="" width="40" height="40" />
+      <span>Shiva Swarodaya</span>
+    </a>
+
+    <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav" type="button">
+      <span class="sr-only">Menu</span>
+      <span class="bars" aria-hidden="true"></span>
+    </button>
+
+    <nav id="site-nav" class="nav" aria-label="Main">
+      <ul>
+        {links.map((l) => (
+          <li><a href={u(l.href)} aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a></li>
+        ))}
+      </ul>
+      <a href={u('/courses/meet-your-swara')} class="btn btn-primary btn-sm nav-cta">Free course</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById('site-header');
+  const toggle = header?.querySelector<HTMLButtonElement>('.menu-toggle');
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    header?.classList.toggle('menu-open', !open);
+    document.body.classList.toggle('no-scroll', !open);
+  });
+  header?.querySelectorAll('.nav a').forEach((a) =>
+    a.addEventListener('click', () => {
+      toggle?.setAttribute('aria-expanded', 'false');
+      header.classList.remove('menu-open');
+      document.body.classList.remove('no-scroll');
+    })
+  );
+
+  // Over the home hero: keep the header transparent and the logo hidden
+  // until the hero has scrolled out of view.
+  const hero = document.querySelector('[data-hero]');
+  if (header?.classList.contains('over-hero') && hero && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      ([entry]) => header.classList.toggle('scrolled', !entry.isIntersecting),
+      { rootMargin: '-68px 0px 0px 0px', threshold: 0 }
+    );
+    io.observe(hero);
+  } else if (header?.classList.contains('over-hero')) {
+    header.classList.add('scrolled');
+  }
+</script>
+
+<style>
+  .site-header { position: sticky; top: 0; z-index: 50; background: var(--stone); border-bottom: 1px solid var(--rule); }
+  .site-header.over-hero { position: fixed; inset: 0 0 auto 0; background: transparent; border-bottom-color: transparent; transition: background-color .4s ease, border-color .4s ease; }
+  .site-header.over-hero.scrolled { background: var(--stone); border-bottom-color: var(--rule); }
+
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: var(--header-h); padding-top: env(safe-area-inset-top, 0px); }
+
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; transition: opacity .5s ease, transform .5s ease; }
+  .brand img { width: 40px; height: 40px; }
+  .brand span { font: 400 19px/1 var(--font-display); color: var(--kumkum); white-space: nowrap; }
+  .over-hero:not(.scrolled) .brand { opacity: 0; transform: translateY(-6px); pointer-events: none; }
+
+  .nav { display: flex; align-items: center; gap: 28px; }
+  .nav ul { display: flex; gap: 24px; list-style: none; margin: 0; padding: 0; }
+  .nav a:not(.btn) { font: 400 15px/1 var(--font-ui); color: var(--muted); text-decoration: none; padding: 8px 0; border-bottom: 1px solid transparent; transition: color .2s; }
+  .nav a:not(.btn):hover, .nav a[aria-current='page'] { color: var(--kumkum); border-bottom-color: var(--gold-soft); }
+  .over-hero:not(.scrolled) .nav a:not(.btn) { color: #E9DFCF; }
+  .over-hero:not(.scrolled) .nav a:not(.btn):hover { color: var(--gold-light); }
+
+  .menu-toggle { display: none; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  @media (max-width: 900px) {
+    .menu-toggle { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; margin-right: -10px; border: 0; background: transparent; cursor: pointer; }
+    .bars, .bars::before, .bars::after { display: block; width: 22px; height: 1.5px; background: var(--ink); position: relative; transition: transform .3s, background-color .3s; }
+    .bars::before, .bars::after { content: ''; position: absolute; left: 0; }
+    .bars::before { top: -7px; } .bars::after { top: 7px; }
+    .over-hero:not(.scrolled):not(.menu-open) .bars,
+    .over-hero:not(.scrolled):not(.menu-open) .bars::before,
+    .over-hero:not(.scrolled):not(.menu-open) .bars::after { background: #E9DFCF; }
+    .menu-open .bars { background: transparent !important; }
+    .menu-open .bars::before { transform: translateY(7px) rotate(45deg); }
+    .menu-open .bars::after { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav { position: fixed; inset: var(--header-h) 0 0 0; background: var(--stone); flex-direction: column; align-items: stretch; gap: 0; padding: 12px var(--gutter) 32px; transform: translateY(-8px); opacity: 0; visibility: hidden; transition: opacity .25s, transform .25s, visibility .25s; overflow-y: auto; }
+    .menu-open .nav { opacity: 1; visibility: visible; transform: none; }
+    .menu-open.site-header { background: var(--stone); }
+    .menu-open .brand { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
+    .nav ul { flex-direction: column; gap: 0; }
+    .nav li { border-bottom: 1px solid var(--rule); }
+    .nav a:not(.btn), .over-hero:not(.scrolled) .nav a:not(.btn) { display: block; padding: 16px 0; font-size: 18px; color: var(--ink); border-bottom: 0; }
+    .nav-cta { margin-top: 24px; }
+  }
+</style>

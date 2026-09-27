@@ -1,0 +1,48 @@
+---
+import { u } from '../lib/url';
+import SocialLinks from './SocialLinks.astro';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container inner">
+    <div class="brand">
+      <img src={u('/images/logo-160.webp')} alt="" width="48" height="48" loading="lazy" />
+      <div>
+        <p class="name">Shiva Swarodaya</p>
+        <p class="by">Swara Yoga taught by Ma Shakti Devpriya</p>
+      </div>
+    </div>
+    <nav aria-label="Footer">
+      <a href={u('/about')}>About</a>
+      <a href={u('/lineage')}>Lineage</a>
+      <a href={u('/courses')}>Courses</a>
+      <a href={u('/videos')}>Videos</a>
+      <a href={u('/calendar')}>Calendar</a>
+      <a href={u('/contact')}>Contact</a>
+    </nav>
+  </div>
+  <div class="container follow">
+    <p class="follow-label">Follow</p>
+    <SocialLinks tone="dark" />
+  </div>
+  <div class="container small">
+    <p>The material on this site is for study. It does not replace guidance from an experienced teacher, or medical advice.</p>
+    <p>© {year} Shiva Swarodaya</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer { background: var(--charcoal); border-top: 1px solid var(--gold); color: #CFC4B6; padding-block: 44px calc(28px + env(safe-area-inset-bottom, 0px)); margin-top: 0; }
+  .inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 32px; padding-bottom: 28px; border-bottom: 1px solid #3A2E28; }
+  .brand { display: flex; gap: 14px; align-items: center; }
+  .brand p { margin: 0; }
+  .name { font: 400 20px/1.2 var(--font-display); color: var(--gold-light); }
+  .by { font: 400 14px/1.4 var(--font-ui); color: #A99B8C; }
+  nav { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; }
+  nav a { color: #CFC4B6; text-decoration: none; font: 400 15px var(--font-ui); padding-block: 6px; }
+  nav a:hover { color: var(--gold-light); }
+  .follow { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; padding-block: 24px; border-bottom: 1px solid #3A2E28; }
+  .follow-label { margin: 0; font: 500 12px/1 var(--font-ui); letter-spacing: .16em; text-transform: uppercase; color: #BFB2A2; }
+  .small { padding-top: 24px; font: 400 13px/1.6 var(--font-ui); color: #98897B; }
+  .small p { margin: 0 0 6px; max-width: 70ch; }
+</style>

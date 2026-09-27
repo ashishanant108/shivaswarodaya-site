@@ -1,0 +1,113 @@
+---
+import { u } from '../lib/url';
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+
+const srividya = [
+  { name: 'Mai ji of Darbhanga', note: '' },
+  { name: 'Datiya Swami ji Maharaj', note: 'Peetambara Peeth, Datia (Madhya Pradesh)' },
+  { name: 'Kaul Kalptaru Shri Poornanand Nath ji', note: 'Paramguru' },
+  { name: 'Gurudev Shri Shivanand Nath ji', note: 'Guru, who gave permission to teach in 2012' },
+  { name: 'Ma Shakti Devpriya and Acharya Agyaatadarshan Anand Nath', note: 'Founders of The Shakti Multiversity' },
+];
+---
+<Base
+  title="Lineage"
+  description="The guru parampara of Ma Shakti Devpriya: the Sri Vidya Krama tradition and the Vama Tantra lineage of Kali Baba, Rishikesh."
+>
+  <PageIntro
+    sanskrit="गुरु परम्परा"
+    eyebrow="Guru parampara"
+    title="Lineage"
+    lede="In Yoga and Tantra, knowledge is received from a teacher, who received it from their own teacher. This page honours the lineage through which the teaching on this site comes."
+  />
+
+  <article class="article">
+    <section class="section" style="padding-top: 8px">
+      <div class="container prose">
+        <p>A lineage is more than a list of names. It is the assurance that a teaching has been practised, tested and handed on carefully, and not assembled from books. This is why the tradition gives such importance to the Guru, to initiation and to direct instruction.</p>
+        <p>Ma Shakti Devpriya and her consort <strong>Acharya Agyaatadarshan Anand Nath</strong>, founders of The Shakti Multiversity, are living teachers in the rare tantric tradition of <strong>Sri Vidya, the Krama system</strong>. They belong to both the right-hand and left-hand tantric traditions of Prayag and Rishikesh.</p>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container two">
+        <div class="prose">
+          <p class="eyebrow">Sri Vidya · Kaula Krama</p>
+          <h2>The Sri Vidya lineage</h2>
+          <p>The teaching is received in the lineage of <strong>Shri Hayagreevaanand Nath ji</strong>, a Himalayan master.</p>
+          <p>Ma Shakti's Guru is <strong>Gurudev Shri Shivanand Nath ji</strong>. His paramguru is <strong>Kaul Kalptaru Shri Poornanand Nath ji</strong>. The lineage also honours <strong>Datiya Swami ji Maharaj</strong> of Peetambara Peeth, Datia, and <strong>Mai ji of Darbhanga</strong>.</p>
+          <p>Ma Shakti is <em>poornabhishiktaa</em> in the Sri Vidya Kaula Krama tradition. She was immersed in Tantra from 2006, and began teaching publicly with Acharya ji in late 2012 after receiving permission from Gurudev Shri Shivanand Nath ji.</p>
+        </div>
+        <div>
+        <ol class="chain" aria-label="Sri Vidya lineage, as listed by The Shakti Multiversity">
+          {srividya.map((g) => (
+            <li>
+              <span class="dot" aria-hidden="true"></span>
+              <span class="g">{g.name}</span>
+              {g.note && <span class="n">{g.note}</span>}
+            </li>
+          ))}
+        </ol>
+        <p class="draft-note" style="margin-top: 24px">Draft: the order shown follows The Shakti Multiversity's Guru Parampara page. To be confirmed with Ma before publishing.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container prose">
+        <p class="eyebrow">Vama Tantra</p>
+        <h2>The Vama Tantra lineage</h2>
+        <p>Ma Shakti Devpriya, with Acharya Agyaatadarshan Anand Nath, was initiated into Vama Tantra by the great Vamamarga teacher <strong>Gurudev Shri Kaleshwaranand ji (Kali Baba)</strong> and Guruma, in the lineage of the <strong>Kali Kamli Wale</strong> of Rishikesh. Kali Baba's home in Prayagraj (Allahabad) has been a place of teaching.</p>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container prose">
+        <p class="eyebrow">Also honoured</p>
+        <h2>Other revered teachers</h2>
+        <ul>
+          <li><strong>Shri Ant Dev ji Maharaj</strong> of Phoolpur, Prayagraj, in the lineage of Shri Lalbaba of Kolkata. His paramguru, Shri AtmDev ji Maharaj, was rajguru to the royal family of Baroda.</li>
+          <li><strong>Shri Kanno Guru ji Maharaj</strong> of Agra.</li>
+          <li><strong>Pandit Shyamjeet Dubey Atharvan ji Maharaj</strong>, an authority on the Atharva Veda.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container prose">
+        <p class="eyebrow">Seva</p>
+        <h2>Service</h2>
+        <p>Alongside a rigorous schedule of sadhana, Ma Shakti and Acharya ji have long been involved in service. They co-founded the non-profit <em>Sacred Association for Rejoice and Love</em> in 2005 and have supported education and women's welfare work.</p>
+        <p>While camping in the forests of the Vindhya mountains near Panna, Madhya Pradesh, Ma began teaching tribal children. With the help of local people, this became a lasting literacy mission in the village of Simariya. Through The Shakti Multiversity Trust, similar work in child education has begun near Shri Shakti Ashram, in the foothills of the Himalayas near Dehradun.</p>
+        <div class="btn-row" style="margin-top: 24px">
+          <a class="btn btn-primary" href={u('/courses/meet-your-swara')}>Begin “Meet your Swara”</a>
+          <a class="btn btn-ghost" href={u('/about')}>About Swara Yoga</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container prose">
+        <h2>Source</h2>
+        <ol class="sources">
+          <li>The Shakti Multiversity, “Our Guru Parampara”: <a href="https://www.shaktimultiversity.com/master-detail/guru">shaktimultiversity.com/master-detail/guru</a>.</li>
+          <li>The Shakti Multiversity, profile of Ma Shakti Devpriya: <a href="https://www.shaktimultiversity.com/master-detail/ma-shakti-devpriya">shaktimultiversity.com/master-detail/ma-shakti-devpriya</a>.</li>
+        </ol>
+      </div>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .two { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
+  @media (max-width: 820px) { .two { grid-template-columns: 1fr; } }
+  .chain { list-style: none; margin: 0; padding: 4px 0 0; position: relative; }
+  .chain::before { content: ''; position: absolute; left: 7px; top: 14px; bottom: 14px; width: 1px; background: var(--gold); }
+  .chain li { position: relative; padding: 0 0 22px 32px; }
+  .chain li:last-child { padding-bottom: 0; }
+  .dot { position: absolute; left: 1px; top: 6px; width: 13px; height: 13px; border-radius: 50%; background: var(--stone-2); border: 1px solid var(--gold-line); }
+  .chain li:last-child .dot { background: var(--kumkum); border-color: var(--kumkum); }
+  .g { display: block; font: 400 18px/1.35 var(--font-display); color: var(--ink); }
+  .n { display: block; font: 400 14px/1.5 var(--font-ui); color: var(--muted); margin-top: 2px; }
+</style>

@@ -1,0 +1,189 @@
+---
+import { u } from '../../lib/url';
+import Base from '../../layouts/Base.astro';
+import PageIntro from '../../components/PageIntro.astro';
+
+// Draft outline for Ma's review. Each day: one short video + one simple observation.
+const days = [
+  { n: 1, title: 'The breath you already have', text: 'Sit comfortably and watch the breath without changing it. Before anything else, we learn simply to notice.', practice: 'Five minutes of quiet observation, morning and evening.' },
+  { n: 2, title: 'Which side is flowing?', text: 'Most of the time one nostril flows more freely than the other. Learn two gentle ways to tell which one it is.', practice: 'Check your flow three times during the day.' },
+  { n: 3, title: 'Ida and Pingala', text: 'The lunar and the solar flow, and what the Shiva Swarodaya says about each.', practice: 'Note how you feel when each side is flowing.' },
+  { n: 4, title: 'The rhythm of your day', text: 'The text describes the flow changing about every hour. Begin a simple Swara diary and compare it with your own day.', practice: 'Record your flow each hour for one day.' },
+  { n: 5, title: 'When both flow: Sushumna', text: 'The moments when the breath flows evenly through both nostrils, and why the tradition connects them with meditation.', practice: 'Sit quietly when you notice both sides flowing.' },
+  { n: 6, title: 'A first look at the tattvas', text: 'An introduction to the five elements that the text describes within each flow. Understanding only, no technique.', practice: 'Read back through your diary with this in mind.' },
+  { n: 7, title: 'Living with Swara', text: 'Bringing a quiet awareness of the breath into daily life, and how the study continues from here.', practice: 'Choose one moment each day to check your Swara.' },
+];
+
+const faqs = [
+  { q: 'Do I need any experience of yoga?', a: 'No. The course starts from the very beginning. If you already practise yoga or pranayama, you will find that Swara Yoga looks at the breath in a different way.' },
+  { q: 'Is it really free?', a: 'Yes. There is nothing to pay and no card is needed. You only need an email address to receive the daily lessons.' },
+  { q: 'How much time does it take?', a: 'About fifteen minutes a day: a short video and a few minutes of quiet practice.' },
+  { q: 'Are the practices safe?', a: 'The course uses only observation of your natural breath. There is no breath holding and no forceful breathing. If you have a respiratory or other health condition, check with your doctor before starting any new practice.' },
+  { q: 'What happens after the seven days?', a: 'If you would like to study further, the foundation course, Swara Yoga Sadhana, continues the teaching in a structured way. There is no obligation.' },
+];
+---
+<Base
+  title="Meet your Swara · free 7-day course"
+  description="A free, pre-recorded seven-day introduction to Swara Yoga with Ma Shakti Devpriya. Learn to observe your own breath as the Shiva Swarodaya describes."
+>
+  <PageIntro
+    sanskrit="स्वर"
+    eyebrow="Free course · 7 days · pre-recorded"
+    title="Meet your Swara"
+    lede="Seven short lessons with Ma Shakti Devpriya, to begin observing your own breath in the way the Shiva Swarodaya describes."
+  />
+
+  <article class="article">
+    <section class="section" style="padding-top: 8px">
+      <div class="container intro">
+        <div class="prose">
+          <p>At any moment, your breath is flowing a little more through one nostril than the other. Most people never notice. Swara Yoga begins right here, with this simple, very ordinary fact.</p>
+          <p>In seven days you will learn to notice which side is flowing, understand what the tradition says about each flow, and begin to see how this rhythm moves through your own day. Nothing needs to be forced. The course is about attention.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="#join">Join the free course</a>
+            <a class="btn btn-ghost" href={u('/about')}>What is Swara Yoga?</a>
+          </div>
+        </div>
+        <dl class="facts">
+          <div><dt>Length</dt><dd>7 days</dd></div>
+          <div><dt>Each day</dt><dd>About 15 minutes</dd></div>
+          <div><dt>Format</dt><dd>Pre-recorded video, by email</dd></div>
+          <div><dt>Teacher</dt><dd>Ma Shakti Devpriya</dd></div>
+          <div><dt>Cost</dt><dd>Free</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container">
+        <p class="eyebrow">The seven days</p>
+        <h2>What you will learn</h2>
+        <ol class="days">
+          {days.map((d) => (
+            <li>
+              <span class="num" aria-hidden="true">{d.n}</span>
+              <div>
+                <h3><span class="sr-only">Day {d.n}: </span>{d.title}</h3>
+                <p>{d.text}</p>
+                <p class="practice"><span>Practice</span> {d.practice}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <p class="draft-note" style="margin-top: 24px">Draft outline for Ma's review. Day titles and content to be confirmed before recording.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container two">
+        <div class="prose">
+          <h2>Who this is for</h2>
+          <ul>
+            <li>Anyone curious about Swara Yoga or the Shiva Swarodaya</li>
+            <li>Yoga practitioners who want to understand the breath beyond technique</li>
+            <li>Those considering the foundation course, who would like to begin gently</li>
+          </ul>
+        </div>
+        <div class="prose callout">
+          <h3>What this course is not</h3>
+          <p>It is not a breathwork programme, and it does not include breath holding, forceful breathing or advanced practices. It is not a medical treatment. It is a careful first step into a traditional discipline.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="join">
+      <div class="container two">
+        <div class="prose">
+          <p class="eyebrow">Join</p>
+          <h2>Begin the course</h2>
+          <p>Enter your name and email address. The first lesson arrives straight away, and one lesson follows each day for seven days.</p>
+          <p class="small-print">We will only use your email to send the course and occasional news from Shiva Swarodaya. You can unsubscribe at any time.</p>
+        </div>
+        <form class="signup" id="signup-form" novalidate>
+          <div class="field">
+            <label for="su-name">Your name</label>
+            <input id="su-name" name="name" type="text" autocomplete="given-name" required />
+          </div>
+          <div class="field">
+            <label for="su-email">Email address</label>
+            <input id="su-email" name="email" type="email" autocomplete="email" required aria-describedby="su-status" />
+          </div>
+          <button type="submit" class="btn btn-primary">Send me Day 1</button>
+          <p id="su-status" class="status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container prose">
+        <h2>Questions</h2>
+        <div class="faq">
+          {faqs.map((f) => (
+            <details>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  </article>
+</Base>
+
+<script>
+  // Placeholder until an email service is connected (see Tracker A-08).
+  const form = document.getElementById('signup-form') as HTMLFormElement | null;
+  const status = document.getElementById('su-status');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = form.querySelector<HTMLInputElement>('#su-email');
+    if (!email?.value || !email.checkValidity()) {
+      if (status) status.textContent = 'Please enter a valid email address.';
+      email?.focus();
+      return;
+    }
+    if (status) status.textContent = 'Thank you. (Preview only: sign-up is not connected yet.)';
+  });
+</script>
+
+<style>
+  .intro { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
+  .facts { margin: 0; border: 1px solid var(--rule); border-radius: 12px; background: var(--stone-2); padding: 8px 22px; }
+  .facts div { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+  .facts div:last-child { border-bottom: 0; }
+  .facts dt { font: 400 14px/1.4 var(--font-ui); color: var(--muted); }
+  .facts dd { margin: 0; font: 500 15px/1.4 var(--font-ui); color: var(--ink); text-align: right; }
+
+  .days { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .days li { display: grid; grid-template-columns: 44px 1fr; gap: 14px; background: var(--stone); border: 1px solid var(--rule); border-radius: 12px; padding: 20px; }
+  .days li:last-child { grid-column: 1 / -1; }
+  .num { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--gold-line); font: 400 18px/1 var(--font-display); color: var(--kumkum); }
+  .days h3 { margin: 6px 0 6px; font-size: 21px; }
+  .days p { margin: 0 0 8px; color: var(--muted); font-size: 16px; }
+  .days .practice { margin: 0; color: var(--ink); font-size: 15px; }
+  .practice span { font: 500 11px/1 var(--font-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--gold-text); margin-right: 6px; }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
+  .small-print { font: 400 14px/1.6 var(--font-ui); color: var(--muted); }
+
+  .signup { display: grid; gap: 16px; background: var(--stone); border: 1px solid var(--rule); border-radius: 14px; padding: 24px; }
+  .field { display: grid; gap: 6px; }
+  .field label { font: 500 14px/1.2 var(--font-ui); color: var(--ink); }
+  .field input { font: 400 16px/1.4 var(--font-ui); padding: 12px 14px; min-height: 46px; border: 1px solid var(--gold-line); border-radius: 10px; background: #FFFDF8; color: var(--ink); }
+  .field input:focus-visible { outline: 2px solid var(--gold-text); outline-offset: 2px; }
+  .signup .btn { justify-self: start; border: 0; cursor: pointer; }
+  .status { margin: 0; min-height: 1.4em; font: 400 14px/1.4 var(--font-ui); color: var(--kumkum); }
+
+  .faq details { border-bottom: 1px solid var(--rule); padding: 4px 0; }
+  .faq summary { cursor: pointer; padding: 14px 0; font: 400 19px/1.35 var(--font-display); color: var(--ink); list-style-position: outside; }
+  .faq summary:focus-visible { outline: 2px solid var(--gold-text); outline-offset: 3px; border-radius: 4px; }
+  .faq details p { margin: 0 0 16px; color: var(--muted); }
+
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  @media (max-width: 820px) {
+    .intro, .two { grid-template-columns: 1fr; }
+    .days { grid-template-columns: 1fr; }
+    .signup .btn { justify-self: stretch; }
+  }
+</style>
