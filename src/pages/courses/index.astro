@@ -2,13 +2,118 @@
 import { u } from '../../lib/url';
 import Base from '../../layouts/Base.astro';
 import PageIntro from '../../components/PageIntro.astro';
+
+const courses = [
+  {
+    href: '/courses/meet-your-swara',
+    dev: 'स्वर',
+    tone: 'kumkum',
+    eyebrow: 'Free course',
+    title: 'Meet your Swara',
+    text: 'Seven short lessons to begin observing your own breath the way the Shiva Swarodaya describes. No experience needed.',
+    facts: [['Length', '7 days'], ['Each day', 'About 15 minutes'], ['Format', 'Pre-recorded video, by email'], ['Cost', 'Free']],
+    cta: 'Begin the free course',
+    primary: true,
+  },
+  {
+    href: '/courses/swara-yoga-sadhana',
+    dev: 'साधना',
+    tone: 'night',
+    eyebrow: 'Foundation course',
+    title: 'Swara Yoga Sadhana',
+    text: 'A structured course in the study and practice of Swara Yoga, taught in stages by Ma Shakti Devpriya, for those ready to practise systematically.',
+    facts: [['Format', 'Pre-recorded, in stages'], ['Guidance', 'From Ma Shakti Devpriya'], ['Enrolment', 'Details coming soon']],
+    cta: 'About the foundation course',
+    primary: false,
+  },
+];
+
+const steps = [
+  { n: 'I', title: 'Meet your Swara', text: 'Learn to notice the flow of breath and what the tradition says about it.' },
+  { n: 'II', title: 'Swara Yoga Sadhana', text: 'Study the teaching of the Shiva Swarodaya and begin guided practice.' },
+  { n: 'III', title: 'Guidance from the Guru', text: 'Deeper practices are received directly from the teacher, when the student is ready.' },
+];
 ---
-<Base title="Courses">
-  <PageIntro eyebrow="Learn" title="Courses" lede="Begin with the free seven-day course, then continue with the foundation course." />
-  <section class="section" style="padding-top:0">
-    <div class="container prose">
-      <p><a class="btn btn-primary" href={u('/courses/meet-your-swara')}>Meet your Swara · free</a></p>
-      <p><a class="btn btn-ghost" href={u('/courses/swara-yoga-sadhana')}>Swara Yoga Sadhana · foundation course</a></p>
+<Base title="Courses" description="Courses in Swara Yoga with Ma Shakti Devpriya: the free seven-day course Meet your Swara, and the foundation course Swara Yoga Sadhana." ogImage="/og/courses.jpg">
+  <PageIntro
+    sanskrit="शिक्षा"
+    eyebrow="Learn"
+    title="Courses"
+    lede="Swara Yoga is learned step by step, under a teacher's guidance. Begin with the free seven-day course, then continue with the foundation course."
+  />
+
+  <section class="section" style="padding-top: 8px">
+    <div class="container">
+      <ul class="cards">
+        {courses.map((c) => (
+          <li class="card">
+            <a class:list={['cover', c.tone]} href={u(c.href)} tabindex="-1" aria-hidden="true">
+              <span class="cover-dev" lang="sa">{c.dev}</span>
+              <span class="cover-tag">{c.eyebrow}</span>
+            </a>
+            <div class="body">
+              <p class="eyebrow">{c.eyebrow}</p>
+              <h2><a href={u(c.href)}>{c.title}</a></h2>
+              <p class="text">{c.text}</p>
+              <dl class="facts">
+                {c.facts.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
+              </dl>
+              <a class:list={['btn', c.primary ? 'btn-primary' : 'btn-ghost']} href={u(c.href)}>{c.cta}</a>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
+      <p class="eyebrow">How the study unfolds</p>
+      <h2>One path, in stages</h2>
+      <ol class="steps">
+        {steps.map((s) => (
+          <li>
+            <span class="num" aria-hidden="true">{s.n}</span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="note">Swara Yoga is a tantric discipline. Its practices are received from a qualified teacher, not learned by self-study. The courses are taught by Ma Shakti Devpriya in the tradition described on the <a href={u('/lineage')}>Lineage</a> page.</p>
     </div>
   </section>
 </Base>
+
+<style>
+  .cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+  .card { display: grid; grid-template-rows: auto 1fr; background: var(--stone); border: 1px solid var(--rule); border-radius: 16px; overflow: hidden; }
+  .cover { position: relative; display: grid; place-items: center; aspect-ratio: 16 / 7; text-decoration: none; overflow: hidden; }
+  .cover.kumkum { background: radial-gradient(ellipse at 50% 120%, #8E1B1B 0%, #5A0F0F 55%, #2B0707 100%); }
+  .cover.night { background: radial-gradient(ellipse at 50% 120%, #3A2A1E 0%, #1A1412 55%, #000 100%); }
+  .cover::before, .cover::after { content: ''; position: absolute; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #9D7636, #F2D9A0, #9D7636); }
+  .cover::before { top: 0; } .cover::after { bottom: 0; }
+  .cover-dev { font: 400 clamp(52px, 7vw, 84px)/1 var(--font-sanskrit); color: var(--gold-light); text-shadow: 0 2px 18px rgba(0, 0, 0, .35); }
+  .cover-tag { position: absolute; top: 18px; left: 20px; font: 500 11px/1 var(--font-ui); letter-spacing: .16em; text-transform: uppercase; color: #F1E3C4; border: 1px solid rgba(226, 198, 142, .55); border-radius: 999px; padding: 6px 10px; }
+  .body { display: flex; flex-direction: column; gap: 0; padding: 26px 28px 28px; }
+  .body h2 { font-size: clamp(26px, 3vw, 32px); margin-bottom: 10px; }
+  .body h2 a { color: var(--ink); text-decoration: none; }
+  .body h2 a:hover { color: var(--kumkum); }
+  .text { color: var(--muted); margin-bottom: 18px; }
+  .facts { margin: 0 0 24px; border-top: 1px solid var(--rule); }
+  .facts div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--rule); }
+  .facts dt { font: 400 14px/1.4 var(--font-ui); color: var(--muted); }
+  .facts dd { margin: 0; font: 500 15px/1.4 var(--font-ui); color: var(--ink); text-align: right; }
+  .body .btn { align-self: flex-start; margin-top: auto; }
+
+  .steps { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; counter-reset: s; }
+  .steps li { position: relative; background: var(--stone); border: 1px solid var(--rule); border-radius: 12px; padding: 24px; }
+  .steps .num { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--gold-line); font: 400 16px/1 var(--font-display); color: var(--kumkum); margin-bottom: 12px; }
+  .steps h3 { margin-bottom: 6px; }
+  .steps p { margin: 0; color: var(--muted); font-size: 16px; }
+  .note { margin-top: 28px; max-width: var(--measure); font-size: 16px; color: var(--ink); border-left: 2px solid var(--gold); padding-left: 16px; }
+
+  @media (max-width: 860px) {
+    .cards, .steps { grid-template-columns: 1fr; }
+    .body .btn { align-self: stretch; }
+  }
+</style>

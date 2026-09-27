@@ -1,12 +1,79 @@
 ---
+import { getCollection } from 'astro:content';
+import { u } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import PageIntro from '../components/PageIntro.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+
+const today = new Date(new Date().toDateString());
+const all = (await getCollection('events')).sort((a, b) => +a.data.date - +b.data.date);
+const upcoming = all.filter((e) => e.data.date >= today);
+const kinds: Record<string, string> = { course: 'Course', live: 'Live session', festival: 'Sacred day', other: 'Event' };
+const fmt = (d: Date, o: Intl.DateTimeFormatOptions) => d.toLocaleDateString('en-IN', { ...o, timeZone: 'Asia/Kolkata' });
 ---
-<Base title="Calendar">
-  <PageIntro eyebrow="Dates" title="Calendar" lede="Upcoming course batches, live sessions and important dates." />
-  <section class="section" style="padding-top:0">
-    <div class="container prose">
-      <p class="draft-note">Draft page. Add events as files in src/content/events.</p>
+<Base title="Calendar" description="Upcoming course batches, live sessions and sacred days at Shiva Swarodaya." ogImage="/og/default.jpg">
+  <PageIntro
+    sanskrit="काल"
+    eyebrow="Dates"
+    title="Calendar"
+    lede="Upcoming course batches, live sessions with Ma Shakti Devpriya, and sacred days in the tradition."
+  />
+
+  <section class="section" style="padding-top: 8px">
+    <div class="container">
+      {upcoming.length > 0 ? (
+        <ol class="events">
+          {upcoming.map((e) => (
+            <li>
+              <time class="date" datetime={e.data.date.toISOString().slice(0, 10)}>
+                <span class="d">{fmt(e.data.date, { day: 'numeric' })}</span>
+                <span class="m">{fmt(e.data.date, { month: 'short' })}</span>
+                <span class="y">{fmt(e.data.date, { year: 'numeric' })}</span>
+              </time>
+              <div class="info">
+                <p class="kind">{kinds[e.data.kind]}</p>
+                <h2>{e.data.title}</h2>
+              </div>
+              {e.data.link && <a class="btn btn-ghost btn-sm" href={u(e.data.link)}>Details</a>}
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <div class="empty">
+          <span class="empty-dev" lang="sa" aria-hidden="true">काल</span>
+          <div>
+            <h2>Dates will be announced here</h2>
+            <p>The first batch of <em>Meet your Swara</em> and the first live sessions with Ma Shakti Devpriya will be listed on this page. The free course can be started at any time.</p>
+            <div class="btn-row">
+              <a class="btn btn-primary" href={u('/courses/meet-your-swara')}>Begin “Meet your Swara”</a>
+            </div>
+            <p class="follow">Or follow for announcements:</p>
+            <SocialLinks />
+          </div>
+        </div>
+      )}
     </div>
   </section>
 </Base>
+
+<style>
+  .events { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .events li { display: grid; grid-template-columns: 88px 1fr auto; gap: 24px; align-items: center; background: var(--stone); border: 1px solid var(--rule); border-radius: 14px; padding: 18px 22px; }
+  .date { display: grid; justify-items: center; background: var(--stone-2); border-radius: 10px; padding: 10px 0; border-top: 3px solid var(--kumkum); }
+  .date .d { font: 400 30px/1 var(--font-display); color: var(--ink); }
+  .date .m { font: 500 12px/1.4 var(--font-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--gold-text); }
+  .date .y { font: 400 12px/1.2 var(--font-ui); color: var(--muted); }
+  .kind { margin: 0 0 4px; font: 500 11px/1 var(--font-ui); letter-spacing: .14em; text-transform: uppercase; color: var(--gold-text); }
+  .info h2 { font-size: 22px; margin: 0; }
+  .empty { display: grid; grid-template-columns: 180px 1fr; gap: 32px; align-items: center; background: var(--stone-2); border: 1px solid var(--rule); border-radius: 16px; padding: clamp(24px, 4vw, 40px); max-width: 900px; }
+  .empty-dev { display: grid; place-items: center; aspect-ratio: 1; border-radius: 50%; border: 1px solid var(--gold-line); font: 400 54px/1 var(--font-sanskrit); color: var(--gold-text); background: var(--stone); }
+  .empty h2 { font-size: clamp(24px, 3vw, 30px); }
+  .empty p { color: var(--muted); }
+  .follow { margin: 20px 0 10px; font-size: 15px; }
+  @media (max-width: 640px) {
+    .events li { grid-template-columns: 72px 1fr; }
+    .events .btn { grid-column: 1 / -1; }
+    .empty { grid-template-columns: 1fr; }
+    .empty-dev { width: 110px; }
+  }
+</style>
