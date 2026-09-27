@@ -2,6 +2,7 @@
 import { u } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import HeroAnimated from '../components/HeroAnimated.astro';
+import PalmLeaf from '../components/PalmLeaf.astro';
 
 const path = [
   { term: 'Breath', dev: 'श्वास', text: 'The movement of air that anyone can observe.' },
@@ -20,8 +21,8 @@ const path = [
       <div class="prose">
         <p class="eyebrow">Swara Yoga · Shiva Swarodaya</p>
         <h1>The breath is visible. Prana is subtle.</h1>
-        <p class="lede">Swara Yoga is the traditional study of Prana through the flow of breath. Its principal text, the Shiva Swarodaya, is a dialogue in which Shiva explains this knowledge to Parvati.</p>
-        <p>This site introduces that teaching carefully, in plain language, as it is practised in a living tradition.</p>
+        <p class="lede">Swara Yoga is the tantric science of Prana, read through the flow of breath. Its scripture, the Shiva Swarodaya, is the dialogue in which Shiva reveals this knowledge to Parvati, calling it the highest of all secrets.</p>
+        <p>This site honours that teaching and introduces it carefully, in plain language, as it lives in an unbroken tradition. Its practices are received from the Guru.</p>
         <div class="btn-row">
           <a class="btn btn-primary" href={u('/courses/meet-your-swara')}>Begin “Meet your Swara” · 7 days, free</a>
           <a class="btn btn-ghost" href={u('/about')}>What is Swara Yoga?</a>
@@ -39,7 +40,19 @@ const path = [
     </div>
   </section>
 
-  <section class="section alt">
+  <section class="section alt leaf-band">
+    <div class="container">
+      <PalmLeaf
+        lines={['स्वरज्ञानात्परं गुह्यं स्वरज्ञानात्परं धनम् ।', 'स्वरज्ञानात्परं ज्ञानं न वा दृष्टं न वा श्रुतम् ॥']}
+        number="॥ २१ ॥"
+      >
+        <p class="meaning">“There is no secret higher than the knowledge of Swara, and no wealth higher than the knowledge of Swara. A knowledge higher than the knowledge of Swara has never been seen or heard.”</p>
+        <p class="cite">Shiva Swarodaya, verse 21 (Khemraj Shrikrishnadas edition) · <a href={u('/about')}>About the scripture</a></p>
+      </PalmLeaf>
+    </div>
+  </section>
+
+  <section class="section">
     <div class="container">
       <p class="eyebrow">The path of study</p>
       <h2>From breath to awareness</h2>
@@ -55,7 +68,7 @@ const path = [
     </div>
   </section>
 
-  <section class="section">
+  <section class="section alt">
     <div class="container course">
       <div class="prose">
         <p class="eyebrow">Free course</p>
@@ -76,13 +89,13 @@ const path = [
     </div>
   </section>
 
-  <section class="section alt">
+  <section class="section">
     <div class="container teacher">
       <img src={u('/images/ma-portrait.webp')} alt="Ma Shakti Devpriya" width="520" height="605" loading="lazy" />
       <div class="prose">
         <p class="eyebrow">The teacher</p>
         <h2>Ma Shakti Devpriya</h2>
-        <p>Ma Shakti Devpriya teaches in the Sri Vidya Krama tradition and is a co-founder of The Shakti Multiversity. Her areas of teaching include Swara Yoga, Tantra and traditional symbolism.</p>
+        <p>Ma Shakti Devpriya teaches in the Sri Vidya Krama tradition and is a co-founder of The Shakti Multiversity. Her areas of teaching include Swara Yoga, Tantra and traditional symbolism. As the tradition requires, the practices of Swara Yoga are given by her directly, in guided courses.</p>
         <div class="btn-row">
           <a class="btn btn-ghost" href={u('/about')}>About Ma</a>
           <a class="btn btn-ghost" href={u('/lineage')}>The lineage</a>
@@ -93,12 +106,14 @@ const path = [
 </Base>
 
 <style>
+  .leaf-band .meaning { font: 400 clamp(18px, 1.8vw, 20px)/1.6 var(--font-display); color: var(--ink); margin: 0 0 8px; }
+  .leaf-band .cite { font: 400 13px/1.5 var(--font-ui); color: var(--muted); margin: 0; }
   .intro-grid { display: grid; grid-template-columns: 1fr auto; gap: clamp(32px, 6vw, 96px); align-items: center; }
   .nadi { width: clamp(90px, 12vw, 140px); height: auto; }
   @media (max-width: 720px) { .intro-grid { grid-template-columns: 1fr; } .nadi { display: none; } }
 
   .path { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; }
-  .path li { background: var(--stone); padding: 24px 24px; }
+  .path li { background: var(--stone-2); padding: 24px 24px; }
   .path .dev { display: block; font-size: 20px; margin-bottom: 6px; }
   .path h3 { margin-bottom: 8px; }
   .path p { margin: 0; color: var(--muted); font-size: 16px; }

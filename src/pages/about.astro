@@ -2,58 +2,86 @@
 import { u } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import PageIntro from '../components/PageIntro.astro';
+import PalmLeaf from '../components/PalmLeaf.astro';
 ---
 <Base
-  title="About Swara Yoga"
+  title="About the Shiva Swarodaya"
   description="What Swara Yoga is, what the Shiva Swarodaya teaches, what modern research does and does not show, and why this site exists. Taught by Ma Shakti Devpriya."
 >
   <PageIntro
-    sanskrit="स्वरोदय"
+    sanskrit="शिवस्वरोदय"
     eyebrow="About"
-    title="Swara Yoga and the Shiva Swarodaya"
-    lede="Swara Yoga is the traditional study of Prana through the flow of breath. This page explains what it is, where it comes from, and how we teach it."
+    title="Shiva Swarodaya"
+    lede="The tantric scripture in which Shiva reveals to Parvati the knowledge of Swara, the flow of breath through which Prana moves. It is the foundation of Swara Yoga."
   />
+
+  <section class="section leaf-section" style="padding-top: 8px">
+    <div class="container">
+      <PalmLeaf
+        lines={['स्वरज्ञानात्परं गुह्यं स्वरज्ञानात्परं धनम् ।', 'स्वरज्ञानात्परं ज्ञानं न वा दृष्टं न वा श्रुतम् ॥']}
+        number="॥ २१ ॥"
+      >
+        <p class="translit"><i>svarajñānāt paraṁ guhyaṁ svarajñānāt paraṁ dhanam |<br />svarajñānāt paraṁ jñānaṁ na vā dṛṣṭaṁ na vā śrutam ||</i></p>
+        <p class="meaning">“There is no secret higher than the knowledge of Swara, and no wealth higher than the knowledge of Swara. A knowledge higher than the knowledge of Swara has never been seen or heard.”</p>
+        <p class="cite">Shiva Swarodaya, verse 21 in the edition with the commentary of Pt. Mihir Chandra (Mumbai: Khemraj Shrikrishnadas, Shri Venkateshwar Press). Verse numbers differ between editions. English rendering ours.</p>
+      </PalmLeaf>
+    </div>
+  </section>
 
   <nav class="container" aria-label="On this page" style="margin-bottom: 8px">
     <ul class="toc">
+      <li><a href="#text">The scripture</a></li>
+      <li><a href="#guru">Received from the Guru</a></li>
       <li><a href="#swara">What is Swara?</a></li>
-      <li><a href="#text">The Shiva Swarodaya</a></li>
       <li><a href="#ideas">Main ideas</a></li>
       <li><a href="#science">What science shows</a></li>
-      <li><a href="#teacher">Learning with a teacher</a></li>
       <li><a href="#purpose">Why this site</a></li>
     </ul>
   </nav>
 
   <article class="article">
-    <section class="section" id="swara">
+    <section class="section" id="text">
       <div class="container prose">
-        <h2>What is Swara?</h2>
-        <p>In Sanskrit, <em>swara</em> means sound or tone. In Swara Yoga it has a particular meaning: the flow of breath through the nostrils, and especially which nostril is flowing more freely at a given moment.</p>
-        <p>Most of the time, one nostril is more open than the other. After a while the flow shifts to the other side. Now and then both flow evenly. The tradition treats these changes as a visible sign of something subtler: the movement of Prana, the life force, through the channels of the body.</p>
-        <p><em>Swarodaya</em> means “the rising of the Swara”. Swara Yoga is the discipline of observing this rising, understanding it, and in time learning to work with it.</p>
-        <div class="callout">
-          <h3>Swara Yoga is not a breathing exercise</h3>
-          <p>Pranayama regulates the breath through set techniques. Modern breathwork uses the breath to produce a particular state. Swara Yoga begins elsewhere. It first asks you to notice the breath as it already is, and to read what that flow indicates. Technique comes later, and within a traditional framework.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section alt" id="text">
-      <div class="container prose">
-        <h2>The Shiva Swarodaya</h2>
-        <p>The main text of Swara Yoga is the <strong>Shiva Swarodaya</strong> (also written Śiva Svarodaya). It is a Sanskrit tantric text, composed as a dialogue in which Shiva explains the knowledge of Swara to Parvati. Its author and date are not known.</p>
-        <p>The text describes the nadis, the three flows of breath, the five tattvas (elements) that arise within each flow, and which kinds of activity suit which flow. It also covers observations about health, timing and the signs of the body, including signs traditionally linked to the approach of death.</p>
-        <p>The text places Swara at the root of all knowledge. In Ram Kumar Rai's translation:</p>
+        <h2>The scripture</h2>
+        <p>The <strong>Shiva Swarodaya</strong> (Śiva Svarodaya) is a Sanskrit scripture of the tantric tradition. It opens as a dialogue: Parvati asks Shiva for the knowledge that brings every accomplishment, and Shiva, the first teacher of Yoga, answers by revealing the science of Swara. Its author and date are not known. It has been preserved and taught within the tradition for generations.</p>
+        <p>Few texts speak of their own subject so highly. The Shiva Swarodaya calls the knowledge of Swara the highest secret, the highest wealth and the highest knowledge, and places all learning within it. In Ram Kumar Rai's translation:</p>
         <blockquote class="verse">
           <p>“All the Vedas, Sastras, Music, and all the three worlds are inherent in the Svaras and the Svaras are identical with Atman.”</p>
           <cite>Shiva Swarodaya, tr. Ram Kumar Rai, <i>Śivasvarodaya: Text with English Translation</i> (Varanasi: Prachya Prakashan). Verse number to be confirmed against the printed edition.</cite>
         </blockquote>
+        <p>The scripture describes the nadis, the three flows of breath, the five tattvas that arise within each flow, and how every kind of action is best undertaken in harmony with them. It also covers health, timing and the signs of the body, including signs traditionally linked to the approach of death.</p>
         <p>Editions differ. The Bihar School of Yoga edition by Swami Muktibodhananda has 395 verses, and verse numbers vary between editions. Where we quote the text on this site, we name the edition we used.</p>
       </div>
     </section>
 
-    <section class="section" id="ideas">
+    <section class="section alt" id="guru">
+      <div class="container prose">
+        <h2>A teaching received from the Guru</h2>
+        <p>Swara Yoga is a tantric discipline. Its practices are not meant for self-study from books or videos. They are received from a qualified teacher, who gives them in the right order, at the right time, and watches over the student's practice.</p>
+        <p>The Shiva Swarodaya itself says to whom this knowledge should be given:</p>
+        <blockquote class="verse" lang="sa">
+          <p class="dev">शान्ते शुद्धे सदाचारे गुरुभक्त्येकमानसे ।<br />दृढचित्ते कृतज्ञे च देयं चैव स्वरोदयम् ॥</p>
+          <p class="en" lang="en">“Swarodaya should be given to one who is peaceful, pure, of good conduct, whose mind is wholly devoted to the Guru, who is steady of mind and grateful.”</p>
+          <cite lang="en">Shiva Swarodaya, verse 13 (Khemraj Shrikrishnadas edition, with the commentary of Pt. Mihir Chandra). English rendering ours.</cite>
+        </blockquote>
+        <p>For this reason, this site explains the teaching and offers only simple, safe observation of the natural breath. The practices themselves are taught by Ma Shakti Devpriya in her courses, in stages, where each step can be guided and every question answered.</p>
+      </div>
+    </section>
+
+    <section class="section" id="swara">
+      <div class="container prose">
+        <h2>What is Swara?</h2>
+        <p>In Sanskrit, <em>swara</em> means sound or tone. In Swara Yoga it has a particular meaning: the flow of breath through the nostrils, and especially which nostril is flowing more freely at a given moment.</p>
+        <p>Most of the time, one nostril is more open than the other. After a while the flow shifts to the other side. Now and then both flow evenly. The tradition treats these changes as the visible sign of something subtler: the movement of Prana, the life force, through the channels of the body.</p>
+        <p><em>Swarodaya</em> means “the rising of the Swara”. Swara Yoga is the discipline of observing this rising, understanding it, and in time, under guidance, learning to work with it.</p>
+        <div class="callout">
+          <h3>Swara Yoga is not a breathing exercise</h3>
+          <p>Pranayama regulates the breath through set techniques. Modern breathwork uses the breath to produce a particular state. Swara Yoga begins elsewhere. It first asks you to notice the breath as it already is, and to read what that flow indicates. Technique comes later, from the teacher, and within a traditional framework.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="ideas">
       <div class="container prose">
         <h2>Main ideas</h2>
         <span class="kind">From the text</span>
@@ -68,7 +96,7 @@ import PageIntro from '../components/PageIntro.astro';
         <p>According to the text, the flow of breath alternates between the two sides through the day and night, changing roughly every two and a half <em>ghatis</em>. A ghati is 24 minutes, so this is about an hour. In practice the rhythm varies from person to person and day to day, which is part of what a student learns to observe.</p>
 
         <h3>The five tattvas</h3>
-        <p>Within each flow, the text describes the five elements (earth, water, fire, air and space) arising in turn. Each is said to have its own character, and the text links them to different kinds of activity. This is one of the subtler parts of the teaching and is best learned under guidance.</p>
+        <p>Within each flow, the text describes the five elements (earth, water, fire, air and space) arising in turn. Each is said to have its own character, and the text links them to different kinds of activity. This is one of the subtler parts of the teaching, learned under the guidance of a teacher.</p>
 
         <h3>Action in harmony with the flow</h3>
         <p>A large part of the text matches activities to the flow of breath. Broadly, the lunar flow is associated with calm, steady and receptive activity, the solar flow with active and demanding work, and Sushumna with meditation and inner practice. The purpose is to act in harmony with one's own rhythm, not to follow rules mechanically.</p>
@@ -78,7 +106,7 @@ import PageIntro from '../components/PageIntro.astro';
       </div>
     </section>
 
-    <section class="section alt" id="science">
+    <section class="section" id="science">
       <div class="container prose">
         <h2>What modern research shows</h2>
         <span class="kind science">Modern science</span>
@@ -92,24 +120,17 @@ import PageIntro from '../components/PageIntro.astro';
       </div>
     </section>
 
-    <section class="section" id="teacher">
-      <div class="container prose">
-        <h2>Why learn with a teacher</h2>
-        <p>Swara Yoga has always been passed on from teacher to student. The text itself stresses that this knowledge should be given with care. Reading about it, on this site or elsewhere, is a starting point. It is not a substitute for guidance from an experienced teacher within a living tradition.</p>
-        <p>For this reason, the public pages of this site explain the ideas and offer only simple, safe observation. Deeper practices are taught in the courses, in stages, where questions can be answered and practice can be guided.</p>
-      </div>
-    </section>
-
     <section class="section alt" id="purpose">
       <div class="container prose">
         <h2>Why this site exists</h2>
-        <p>Swara Yoga is often presented today as a set of quick tricks, or mixed with modern breathwork until the original teaching is hard to find. The purpose of Shiva Swarodaya is to share the authentic teaching of Swara Yoga, faithfully and in plain language, as it is practised in the tradition of Ma Shakti Devpriya.</p>
+        <p>Swara Yoga is often presented today as a set of quick tricks, or mixed with modern breathwork until the original teaching is hard to find. The purpose of this site is to honour the Shiva Swarodaya and to share the authentic teaching of Swara Yoga, faithfully and in plain language, as it lives in the tradition of Ma Shakti Devpriya.</p>
         <p>We work to a few simple principles:</p>
         <ul>
           <li>What the text says is kept separate from later interpretation and from modern science.</li>
           <li>Every important claim has a source.</li>
           <li>Understanding comes before technique, and practice before promises.</li>
           <li>No medical claims, and no shortcuts.</li>
+          <li>Practices are learned from the teacher, not from the page.</li>
         </ul>
         <p>You can begin with the free seven-day course, <em>Meet your Swara</em>, and continue with the foundation course when you are ready.</p>
         <div class="btn-row">
@@ -137,6 +158,7 @@ import PageIntro from '../components/PageIntro.astro';
         <h2>Sources</h2>
         <ol class="sources">
           <li>Ram Kumar Rai (tr.), <i>Śivasvarodaya: Text with English Translation</i>. Varanasi: Prachya Prakashan. Scanned copy: <a href="https://archive.org/details/yshivasvarodayatextwithenglishtranslationramkumarrai">archive.org</a>.</li>
+          <li><i>Śivasvarodaya</i>, with the Hindi commentary of Mahamahopadhyaya Pt. Mihir Chandra. Mumbai: Khemraj Shrikrishnadas, Shri Venkateshwar Press. Scanned copy: <a href="https://archive.org/details/jyotish-mein-svara-vigyan-ka-mahatva-kedar-nath-joshi_202012">archive.org</a>. Source of verses 13 and 21 quoted above.</li>
           <li>Swami Muktibodhananda, <i>Swara Yoga: The Tantric Science of Brain Breathing</i>. Munger: Bihar School of Yoga, 1984. Includes the text and a translation of the Shiva Swarodaya.</li>
           <li>A. L. Pendolino et al., “The nasal cycle: a comprehensive review”, <i>Rhinology Online</i> 1 (2018). <a href="https://www.rhinologyonline.org/Rhinology_online_issues/2018/18021_Pendolino.pdf">rhinologyonline.org</a>.</li>
           <li>D. A. Werntz, R. G. Bickford, F. E. Bloom, D. S. Shannahoff-Khalsa, “Alternating cerebral hemispheric activity and the lateralization of autonomic nervous function”, <i>Human Neurobiology</i> 2 (1983).</li>
@@ -149,6 +171,11 @@ import PageIntro from '../components/PageIntro.astro';
 </Base>
 
 <style>
+  .leaf-section .translit { font: 400 16px/1.7 var(--font-body); color: var(--muted); margin: 0 0 10px; }
+  .leaf-section .meaning { font: 400 clamp(18px, 1.8vw, 20px)/1.6 var(--font-display); color: var(--ink); margin: 0 0 10px; }
+  .leaf-section .cite { font: 400 13px/1.5 var(--font-ui); color: var(--muted); margin: 0; }
+  .verse .dev { font: 400 clamp(19px, 2vw, 22px)/1.7 var(--font-sanskrit); font-style: normal; color: var(--kumkum); margin-bottom: 12px; }
+  .verse .en { font-style: italic; }
   .ma { display: grid; grid-template-columns: 260px 1fr; gap: clamp(28px, 5vw, 56px); align-items: center; }
   .ma img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; border-radius: 999px 999px 14px 14px; }
   @media (max-width: 640px) { .ma { grid-template-columns: 1fr; } .ma img { width: min(220px, 64%); } }

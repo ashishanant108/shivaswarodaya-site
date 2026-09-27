@@ -2,8 +2,7 @@
 /**
  * Social media links. Edit the links in src/data/site.ts.
  * Icons come from the Simple Icons package (npm: simple-icons, CC0),
- * shown in one calm colour to match the site, as each platform's brand
- * guidelines allow for links to an account.
+ * shown in each platform's own colours on a white disc.
  */
 import { siYoutube, siInstagram, siFacebook, siWhatsapp } from 'simple-icons';
 import { social } from '../data/site';
@@ -17,6 +16,13 @@ const paths: Record<string, string> = {
   facebook: siFacebook.path,
   whatsapp: siWhatsapp.path,
 };
+const colors: Record<string, string> = {
+  youtube: `#${siYoutube.hex}`,
+  facebook: `#${siFacebook.hex}`,
+  whatsapp: `#${siWhatsapp.hex}`,
+  instagram: '', // uses the gradient below
+};
+const gid = `ig-${Math.random().toString(36).slice(2, 8)}`;
 const links = social.filter((s) => s.href);
 const external = (href: string) => href.startsWith('http');
 ---
@@ -31,7 +37,20 @@ const external = (href: string) => href.startsWith('http');
           aria-label={showLabels ? undefined : `${s.label}${external(s.href) ? ' (opens in a new tab)' : ''}`}
           title={showLabels ? undefined : s.label}
         >
-          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor"><path d={paths[s.id]} /></svg>
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            {s.id === 'instagram' && (
+              <defs>
+                <radialGradient id={gid} cx="30%" cy="107%" r="150%">
+                  <stop offset="0%" stop-color="#FDF497" />
+                  <stop offset="5%" stop-color="#FDF497" />
+                  <stop offset="45%" stop-color="#FD5949" />
+                  <stop offset="60%" stop-color="#D6249F" />
+                  <stop offset="90%" stop-color="#285AEB" />
+                </radialGradient>
+              </defs>
+            )}
+            <path d={paths[s.id]} fill={s.id === 'instagram' ? `url(#${gid})` : colors[s.id]} />
+          </svg>
           {showLabels && <span>{s.label}</span>}
         </a>
       </li>
@@ -44,12 +63,12 @@ const external = (href: string) => href.startsWith('http');
   .social a {
     display: inline-flex; align-items: center; justify-content: center; gap: 10px;
     width: 44px; height: 44px; border-radius: 50%;
-    text-decoration: none; transition: background-color .2s, color .2s, border-color .2s;
+    background: #FFFFFF; text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease;
   }
-  .labels a { width: auto; border-radius: 999px; padding: 0 18px 0 14px; font: 400 15px/1 var(--font-ui); }
-
-  .light a { color: var(--kumkum); border: 1px solid var(--gold-line); }
-  .light a:hover { background: var(--kumkum); color: var(--stone); border-color: var(--kumkum); }
-  .dark a { color: var(--gold-light); border: 1px solid #4A3C33; }
-  .dark a:hover { background: var(--gold-light); color: var(--charcoal); border-color: var(--gold-light); }
+  .social a:hover { transform: translateY(-2px); box-shadow: 0 6px 14px -6px rgba(0, 0, 0, .45); }
+  .labels a { width: auto; border-radius: 999px; padding: 0 18px 0 12px; font: 400 15px/1 var(--font-ui); color: var(--ink); }
+  .light a { border: 1px solid var(--rule); }
+  .dark a { border: 1px solid transparent; }
+  @media (prefers-reduced-motion: reduce) { .social a:hover { transform: none; } }
 </style>
