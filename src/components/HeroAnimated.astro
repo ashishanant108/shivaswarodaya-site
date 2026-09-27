@@ -5,9 +5,10 @@ import { u } from '../lib/url';
  *   1. 0.2–1.2s  A gold ring draws around the emblem while the logo turns
  *                 into place on a black screen.
  *   2. 1.2–2.4s  Ma's portrait and her name appear together, side by side.
- *   3. 2.0–4.5s  The golden elements (lotus, glitter, light, gold bars) bloom
- *                 outward from the logo, overlapping the end of step 2,
- *                 ending on the complete banner at 4.5s.
+ *   3. 1.2–4.5s  Straight after the logo, the golden elements (lotus,
+ *                 glitter, light, gold bars) fade in evenly, ending on the
+ *                 complete banner at 4.5s. The top and bottom gold bars
+ *                 continue to the edges of the screen.
  *
  * All layers are full-size (1600 × 900) transparent images cut from the
  * banner, so they line up exactly. They live in public/images/hero/.
@@ -20,6 +21,10 @@ import { u } from '../lib/url';
 ---
 <section class="hero" data-hero aria-label="Ma Shakti Devpriya">
   <div class="stage">
+    <span class="ext top left" aria-hidden="true"></span>
+    <span class="ext top right" aria-hidden="true"></span>
+    <span class="ext bottom left" aria-hidden="true"></span>
+    <span class="ext bottom right" aria-hidden="true"></span>
     <img class="layer gold" src={u('/images/hero/banner-full.webp')} alt="" width="1600" height="900" fetchpriority="high" />
     <svg class="ring" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="98" pathLength="1" /></svg>
     <img class="layer logo" src={u('/images/hero/layer-logo.webp')} alt="" width="1600" height="900" fetchpriority="high" />
@@ -31,16 +36,10 @@ import { u } from '../lib/url';
 </section>
 
 <style>
-  @property --bloom {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 0%;
-  }
-
   .hero {
     --t-logo: .2s;   /* step 1: 1.0s, finishes at 1.2s */
     --t-pair: 1.2s;  /* step 2: 1.2s, finishes at 2.4s */
-    --t-gold: 2.0s;  /* step 3: 2.5s, overlaps step 2 by 0.4s, finishes at 4.5s */
+    --t-gold: 1.2s;  /* step 3: 3.3s linear fade, starts with step 2, finishes at 4.5s */
     --t-cue: 4.5s;
     position: relative;
     background: #000;
@@ -54,8 +53,8 @@ import { u } from '../lib/url';
 
   .stage {
     position: relative;
-    /* kept to about three-quarters of the screen height, and never wider than 1040px */
-    width: min(100%, 1040px, calc((75svh - var(--header-h)) * 16 / 9));
+    /* same width as the page's text column, and at most about three-quarters of the screen height */
+    width: min(calc(min(100%, var(--max)) - 2 * var(--gutter)), calc((75svh - var(--header-h)) * 16 / 9));
     aspect-ratio: 16 / 9;
   }
   .layer { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -80,13 +79,19 @@ import { u } from '../lib/url';
   .ma { --dx: -1.6%; }
   .name { --dx: 1.6%; }
 
-  /* 3 · golden elements bloom out from the logo */
-  .gold {
-    opacity: 0;
-    -webkit-mask-image: radial-gradient(circle at 44% 56%, #000 var(--bloom), transparent calc(var(--bloom) + 18%));
-            mask-image: radial-gradient(circle at 44% 56%, #000 var(--bloom), transparent calc(var(--bloom) + 18%));
-    animation: gold-in 2.5s ease-out var(--t-gold) forwards;
-  }
+  /* 3 · golden elements fade in evenly, straight after the logo */
+  .gold, .ext { opacity: 0; animation: fade 3.3s linear var(--t-gold) forwards; }
+
+  /* gold bars continued to the screen edges (colours sampled from the banner) */
+  .ext { position: absolute; width: 50vw; pointer-events: none; }
+  .ext.top { top: 0; height: 1.9%; }
+  .ext.bottom { top: 98.44%; height: 1.56%; }
+  .ext.left { right: 100%; }
+  .ext.right { left: 100%; }
+  .ext.top.left { background: linear-gradient(180deg, #9D7636, #927853); }
+  .ext.top.right { background: linear-gradient(180deg, #F8DCA6, #CAA564); }
+  .ext.bottom.left { background: linear-gradient(180deg, #B16739, #9A712F); }
+  .ext.bottom.right { background: linear-gradient(180deg, #AC925D, #B38F45); }
 
   .cue { position: absolute; left: 50%; bottom: 18px; width: 44px; height: 44px; margin-left: -22px; display: grid; place-items: center; opacity: 0; animation: fade 1s ease var(--t-cue) forwards; }
   .cue span { width: 1px; height: 26px; background: linear-gradient(var(--gold-soft), transparent); animation: cue 2.4s ease-in-out calc(var(--t-cue) + 1s) infinite; }
@@ -97,10 +102,6 @@ import { u } from '../lib/url';
   @keyframes draw { to { stroke-dashoffset: 0; } }
   @keyframes ring-out { to { opacity: 0; } }
   @keyframes pair-in { from { opacity: 0; transform: translateX(var(--dx)); } to { opacity: 1; transform: none; } }
-  @keyframes gold-in {
-    0% { opacity: 1; --bloom: 0%; }
-    100% { opacity: 1; --bloom: 130%; }
-  }
   @keyframes fade { to { opacity: 1; } }
   @keyframes cue { 0%, 100% { transform: translateY(0); opacity: .5; } 50% { transform: translateY(8px); opacity: 1; } }
 
@@ -112,8 +113,7 @@ import { u } from '../lib/url';
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .logo, .ma, .name, .gold, .cue, .cue span { animation: none !important; opacity: 1 !important; transform: none !important; }
+    .logo, .ma, .name, .gold, .ext, .cue, .cue span { animation: none !important; opacity: 1 !important; transform: none !important; }
     .ring { display: none; }
-    .gold { -webkit-mask-image: none; mask-image: none; }
   }
 </style>
