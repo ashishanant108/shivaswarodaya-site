@@ -1,0 +1,65 @@
+---
+import { u } from '../lib/url';
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { contactEmail, legal } from '../data/site';
+const email = contactEmail || '[contact email]';
+---
+<Base title="Terms of use" description="The terms for using shivaswarodaya.com and its courses.">
+  <PageIntro eyebrow="Terms" title="Terms of use" lede={`Last updated: ${legal.lastUpdated}`} />
+
+  <article class="article">
+    <section class="section" style="padding-top: 8px">
+      <div class="container prose legal-text">
+        <p class="draft-note">Draft for review. The refund terms and legal details should be confirmed, and the whole text checked by someone qualified, before the site launches.</p>
+
+        <p>These terms apply to shivaswarodaya.com and the courses offered through it. The site is run by {legal.operator}. By using the site you accept these terms.</p>
+
+        <h2>The nature of this teaching</h2>
+        <p>The content of this site and its courses is traditional yogic and tantric teaching, offered for study and personal practice. It is educational. It is not medical, psychological or other professional advice, and it is not a substitute for guidance from an experienced teacher.</p>
+
+        <h2>Health and safety</h2>
+        <p>Swara Yoga is not a medical treatment and makes no claim to cure any illness. Please consult a doctor before beginning any new practice if you are pregnant, or have a heart, lung, blood pressure, mental health or other medical condition. Stop any practice that causes discomfort, and practise within your own limits. You take part at your own responsibility.</p>
+
+        <h2>Courses</h2>
+        <ul>
+          <li>The free course, <em>Meet your Swara</em>, is offered as it is and may be changed or withdrawn.</li>
+          <li>Paid courses are sold through a course platform. The price, what is included and how long you have access are shown at the time of purchase.</li>
+          <li>Course materials are for your personal use only. Please do not share your login, or copy, record or redistribute the lessons.</li>
+        </ul>
+
+        <h2>Refunds</h2>
+        <p>[Refund terms to be decided: for example, a full refund if requested within 7 days of purchase and before more than a set portion of the course has been viewed.] To ask for a refund, write to <strong>{email}</strong>.</p>
+
+        <h2>Content and copyright</h2>
+        <p>The text, videos, images, diagrams and course materials on this site belong to Shiva Swarodaya and Ma Shakti Devpriya, or are used with permission. You may share links to the site and quote short passages with credit. Please ask before using anything else.</p>
+        <p>Quotations from traditional texts and translations are credited to their sources.</p>
+
+        <h2>Using the site</h2>
+        <p>Please use the site lawfully and respectfully. Do not attempt to disrupt it, collect other people's information from it, or use it to send unwanted messages.</p>
+
+        <h2>Links to other sites</h2>
+        <p>The site links to other services, such as YouTube, social media and the course platform. We are not responsible for their content or practices, which are governed by their own terms.</p>
+
+        <h2>Limitation of liability</h2>
+        <p>We take care to present the teaching accurately, but the site is provided as it is, without guarantees. To the extent the law allows, we are not liable for any loss or harm arising from the use of the site or the practices described on it.</p>
+
+        <h2>Changes</h2>
+        <p>We may update these terms from time to time. The date at the top of this page shows when they last changed.</p>
+
+        <h2>Law and disputes</h2>
+        <p>These terms are governed by the laws of India. Any dispute will be subject to the courts of {legal.courtsCity}.</p>
+
+        <h2>Contact</h2>
+        <p>For any question about these terms, write to <strong>{email}</strong>.</p>
+
+        <p><a href={u('/privacy')}>Read the privacy policy →</a></p>
+      </div>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .legal-text h2 { font-size: clamp(22px, 2.6vw, 26px); margin: 1.6em 0 .5em; }
+  .legal-text .draft-note { margin-bottom: 28px; }
+</style>

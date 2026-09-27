@@ -8,3 +8,12 @@ export const social = [
 ];
 
 export const contactEmail = ''; // e.g. 'namaste@shivaswarodaya.com'
+
+// Used on the Privacy and Terms pages. Fill in before launch.
+export const legal = {
+  operator: '[Name of the person or organisation that runs the site]',
+  address: '[Postal address]',
+  grievanceOfficer: '[Name of the person who handles privacy requests]',
+  courtsCity: '[City]',
+  lastUpdated: '27 September 2026',
+};

@@ -1,0 +1,79 @@
+---
+import { u } from '../lib/url';
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { contactEmail, legal } from '../data/site';
+const email = contactEmail || '[contact email]';
+---
+<Base title="Privacy policy" description="How Shiva Swarodaya collects, uses and protects personal information.">
+  <PageIntro eyebrow="Privacy" title="Privacy policy" lede={`Last updated: ${legal.lastUpdated}`} />
+
+  <article class="article">
+    <section class="section" style="padding-top: 8px">
+      <div class="container prose legal-text">
+        <p class="draft-note">Draft for review. This text should be checked by someone qualified in Indian data protection law before the site launches.</p>
+
+        <p>This policy explains what personal information Shiva Swarodaya (“we”) collects through shivaswarodaya.com, why we collect it, and the choices you have. The site is run by {legal.operator}.</p>
+
+        <h2>What we collect</h2>
+        <ul>
+          <li><strong>When you join a course:</strong> your name and email address.</li>
+          <li><strong>When you write to us:</strong> your name, email address and your message.</li>
+          <li><strong>When you visit the site:</strong> basic technical information such as your IP address, browser type and the pages you view. Our hosting provider records this automatically. If we use Google Analytics, it is switched on only after you agree to it.</li>
+        </ul>
+        <p>We do not ask for payment details on this site. Payments for paid courses are handled by the course platform, under its own privacy policy.</p>
+
+        <h2>Why we use it</h2>
+        <ul>
+          <li>To send you the course lessons you signed up for.</li>
+          <li>To reply to your questions.</li>
+          <li>To send occasional news about courses, if you agreed to receive it.</li>
+          <li>To understand, in general terms, how the site is used, so we can improve it.</li>
+        </ul>
+        <p>We use your information only on the basis of your consent, which you give when you sign up or write to us. You can withdraw consent at any time, as described below.</p>
+
+        <h2>Who we share it with</h2>
+        <p>We do not sell or rent your personal information. We share it only with services that help us run the site, and only as far as they need:</p>
+        <ul>
+          <li>our website hosting provider;</li>
+          <li>our email service, which sends the course lessons;</li>
+          <li>Google, for web fonts, YouTube videos and (if you allow it) Google Analytics;</li>
+          <li>the course platform, if you enrol in a paid course.</li>
+        </ul>
+        <p>Some of these services may store data outside India.</p>
+
+        <h2>Cookies</h2>
+        <p>The site itself does not need cookies to work. Analytics cookies are used only if you accept them. Videos embedded from YouTube may set their own cookies when you play them.</p>
+
+        <h2>How long we keep it</h2>
+        <p>We keep your email address while you are subscribed to a course or our news. When you unsubscribe or ask us to delete it, we remove it, except where the law requires us to keep a record.</p>
+
+        <h2>Your rights</h2>
+        <p>Under India's Digital Personal Data Protection Act, 2023, and similar laws elsewhere, you can ask us to:</p>
+        <ul>
+          <li>tell you what personal information we hold about you;</li>
+          <li>correct or update it;</li>
+          <li>delete it;</li>
+          <li>stop using it, by withdrawing your consent (every email has an unsubscribe link).</li>
+        </ul>
+        <p>You can also nominate another person to exercise these rights on your behalf. To make a request, write to <strong>{email}</strong>. We will reply within a reasonable time.</p>
+
+        <h2>Children</h2>
+        <p>Our courses are meant for adults. If you are under 18, please use the site only with the consent of a parent or guardian.</p>
+
+        <h2>Questions and complaints</h2>
+        <p>For any question or complaint about your personal information, contact {legal.grievanceOfficer} at <strong>{email}</strong>, or write to {legal.address}. If you are not satisfied with our response, you may complain to the Data Protection Board of India.</p>
+
+        <h2>Changes to this policy</h2>
+        <p>If we change this policy, we will update the date at the top of this page. For important changes, we will also inform subscribers by email.</p>
+
+        <p><a href={u('/terms')}>Read the terms of use →</a></p>
+      </div>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .legal-text h2 { font-size: clamp(22px, 2.6vw, 26px); margin: 1.6em 0 .5em; }
+  .legal-text .draft-note { margin-bottom: 28px; }
+</style>

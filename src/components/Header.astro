@@ -81,8 +81,8 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
   .over-hero:not(.scrolled) .brand { opacity: 0; transform: translateY(-6px); pointer-events: none; }
 
   .nav { display: flex; align-items: center; gap: 28px; }
-  .nav ul { display: flex; gap: 24px; list-style: none; margin: 0; padding: 0; }
-  .nav a:not(.btn) { font: 400 15px/1 var(--font-ui); color: var(--muted); text-decoration: none; padding: 8px 0; border-bottom: 1px solid transparent; transition: color .2s; }
+  .nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
+  .nav a:not(.btn) { font: 400 17px/1 var(--font-ui); letter-spacing: .01em; color: var(--muted); text-decoration: none; padding: 8px 0; border-bottom: 1px solid transparent; transition: color .2s; }
   .nav a:not(.btn):hover, .nav a[aria-current='page'] { color: var(--kumkum); border-bottom-color: var(--gold-soft); }
   .over-hero:not(.scrolled) .nav a:not(.btn) { color: #E9DFCF; }
   .over-hero:not(.scrolled) .nav a:not(.btn):hover { color: var(--gold-light); }
@@ -90,7 +90,7 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
   .menu-toggle { display: none; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-  @media (max-width: 900px) {
+  @media (max-width: 1040px) {
     .menu-toggle { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; margin-right: -10px; border: 0; background: transparent; cursor: pointer; }
     .bars, .bars::before, .bars::after { display: block; width: 22px; height: 1.5px; background: var(--ink); position: relative; transition: transform .3s, background-color .3s; }
     .bars::before, .bars::after { content: ''; position: absolute; left: 0; }
@@ -108,7 +108,7 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
     .menu-open .brand { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
     .nav ul { flex-direction: column; gap: 0; }
     .nav li { border-bottom: 1px solid var(--rule); }
-    .nav a:not(.btn), .over-hero:not(.scrolled) .nav a:not(.btn) { display: block; padding: 16px 0; font-size: 18px; color: var(--ink); border-bottom: 0; }
+    .nav a:not(.btn), .over-hero:not(.scrolled) .nav a:not(.btn) { display: block; padding: 16px 0; font-size: 20px; color: var(--ink); border-bottom: 0; }
     .nav-cta { margin-top: 24px; }
   }
 </style>
