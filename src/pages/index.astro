@@ -91,7 +91,7 @@ const path = [
 
   <section class="section">
     <div class="container teacher">
-      <img src={u('/images/ma-portrait.webp')} alt="Ma Shakti Devpriya" width="520" height="605" loading="lazy" />
+      <img src={u('/images/ma-portrait.webp')} srcset={`${u('/images/ma-portrait-300.webp')} 300w, ${u('/images/ma-portrait.webp')} 520w`} sizes="(max-width: 640px) 240px, 280px" alt="Ma Shakti Devpriya" width="520" height="605" loading="lazy" decoding="async" />
       <div class="prose">
         <p class="eyebrow">The teacher</p>
         <h2>Ma Shakti Devpriya</h2>

@@ -1,5 +1,7 @@
 ---
 import { u } from '../lib/url';
+// Phones load the 800 px layers (about 95 KB in all), laptops 1200 or 1600 px.
+const sizes = '(max-width: 820px) 100vw, 1010px';
 /**
  * Home hero: the original banner, revealed in three stages.
  *   1. 0.2–1.2s  A gold ring draws around the emblem while the logo turns
@@ -25,11 +27,11 @@ import { u } from '../lib/url';
     <span class="ext top right" aria-hidden="true"></span>
     <span class="ext bottom left" aria-hidden="true"></span>
     <span class="ext bottom right" aria-hidden="true"></span>
-    <img class="layer gold" src={u('/images/hero/banner-full.webp')} alt="" width="1600" height="900" fetchpriority="high" />
+    <img class="layer gold" src={u('/images/hero/banner-full.webp')} srcset={`${u('/images/hero/banner-full-800.webp')} 800w, ${u('/images/hero/banner-full-1200.webp')} 1200w, ${u('/images/hero/banner-full.webp')} 1600w`} sizes={sizes} alt="" width="1600" height="900" fetchpriority="high" />
     <svg class="ring" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="98" pathLength="1" /></svg>
-    <img class="layer logo" src={u('/images/hero/layer-logo.webp')} alt="" width="1600" height="900" fetchpriority="high" />
-    <img class="layer ma" src={u('/images/hero/layer-ma.webp')} alt="" width="1600" height="900" />
-    <img class="layer name" src={u('/images/hero/layer-name.webp')} alt="" width="1600" height="900" />
+    <img class="layer logo" src={u('/images/hero/layer-logo.webp')} srcset={`${u('/images/hero/layer-logo-800.webp')} 800w, ${u('/images/hero/layer-logo-1200.webp')} 1200w, ${u('/images/hero/layer-logo.webp')} 1600w`} sizes={sizes} alt="" width="1600" height="900" fetchpriority="high" />
+    <img class="layer ma" src={u('/images/hero/layer-ma.webp')} srcset={`${u('/images/hero/layer-ma-800.webp')} 800w, ${u('/images/hero/layer-ma-1200.webp')} 1200w, ${u('/images/hero/layer-ma.webp')} 1600w`} sizes={sizes} alt="" width="1600" height="900" />
+    <img class="layer name" src={u('/images/hero/layer-name.webp')} srcset={`${u('/images/hero/layer-name-800.webp')} 800w, ${u('/images/hero/layer-name-1200.webp')} 1200w, ${u('/images/hero/layer-name.webp')} 1600w`} sizes={sizes} alt="" width="1600" height="900" />
     <p class="sr-only">Ma Shakti Devpriya</p>
   </div>
   <a class="cue" href="#intro" aria-label="Scroll to introduction"><span></span></a>

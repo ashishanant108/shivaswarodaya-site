@@ -1,5 +1,16 @@
 ---
 import { u } from '../lib/url';
+// Fonts are served from the site itself (no Google Fonts request). Each file
+// below is split by script, so the browser downloads only the parts it needs.
+import '@fontsource/marcellus/400.css';
+import '@fontsource/lora/400.css';
+import '@fontsource/lora/500.css';
+import '@fontsource/lora/400-italic.css';
+import '@fontsource/jost/400.css';
+import '@fontsource/jost/500.css';
+import '@fontsource/tiro-devanagari-sanskrit/400.css';
+import marcellusLatin from '@fontsource/marcellus/files/marcellus-latin-400-normal.woff2?url';
+import loraLatin from '@fontsource/lora/files/lora-latin-400-normal.woff2?url';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -34,7 +45,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {import.meta.env.PUBLIC_NOINDEX === 'true' && <meta name="robots" content="noindex, nofollow" />}
-    <link rel="icon" type="image/png" href={u('/favicon.png')} />
+    <link rel="icon" href={u('/favicon.ico')} sizes="32x32" />
+    <link rel="icon" type="image/png" sizes="96x96" href={u('/favicon.png')} />
+    <link rel="apple-touch-icon" href={u('/apple-touch-icon.png')} />
+    <link rel="manifest" href={u('/site.webmanifest')} />
     <meta name="theme-color" content="#000000" />
     <!-- Sharing cards (WhatsApp, Facebook, LinkedIn, X) -->
     <meta property="og:site_name" content="Shiva Swarodaya" />
@@ -54,9 +68,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
     <meta name="twitter:image:alt" content={ogImageAlt} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Lora:ital,wght@0,400;0,500;1,400&family=Marcellus&family=Tiro+Devanagari+Sanskrit&display=swap" />
+    <link rel="preload" href={marcellusLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={loraLatin} as="font" type="font/woff2" crossorigin />
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>

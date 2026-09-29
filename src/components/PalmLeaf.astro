@@ -1,23 +1,29 @@
 ---
 /**
- * A Sanskrit verse presented on a palm leaf, in the style of a traditional
- * tala-patra manuscript: a long leaf with grain, two string holes and a
- * thread, with the verse written across it.
+ * A Sanskrit verse written on a palm leaf (tala-patra).
+ * The leaf is a photograph (public/images/palm-leaf-*.webp, cut out from
+ * Images/Palm leaf.png); the verse is live text set in Hind, dark brown, to
+ * match the "Shloka Style" sample. Live text stays sharp, searchable and
+ * readable by screen readers, and any verse can be placed on the same leaf.
  * Only use verses checked against a named edition (see Tracker A-21).
  */
+import '@fontsource/hind/500.css';
+import { u } from '../lib/url';
+
 interface Props {
-  lines: string[];          // Devanagari, one entry per half-verse
+  lines: string[];          // Devanagari, one entry per half-verse or pada
   number?: string;          // e.g. "॥ २१ ॥"
+  source?: string;          // optional small label on the leaf, e.g. "(शिवस्वरोदय)"
 }
-const { lines, number } = Astro.props;
+const { lines, number, source } = Astro.props;
+const leafStyle = `--leaf-s: url('${u('/images/palm-leaf-800.webp')}'); --leaf-l: url('${u('/images/palm-leaf-1320.webp')}');`;
 ---
 <figure class="leaf-wrap">
-  <div class="leaf" lang="sa">
-    <span class="hole left" aria-hidden="true"></span>
-    <span class="hole right" aria-hidden="true"></span>
+  <div class="leaf" lang="sa" style={leafStyle}>
     <blockquote class="text">
       {lines.map((l) => <p>{l}</p>)}
       {number && <p class="num">{number}</p>}
+      {source && <p class="src">{source}</p>}
     </blockquote>
   </div>
   <figcaption><slot /></figcaption>
@@ -26,36 +32,39 @@ const { lines, number } = Astro.props;
 <style>
   .leaf-wrap { margin: 0; }
   .leaf {
-    position: relative;
-    max-width: 880px;
+    max-width: 840px;
+    min-height: 0;
     margin: 0 auto;
-    padding: clamp(26px, 4vw, 40px) clamp(56px, 9vw, 110px);
-    border-radius: 48px / 50%;
-    background:
-      repeating-linear-gradient(180deg, rgba(120, 82, 30, .10) 0 1px, transparent 1px 7px),
-      linear-gradient(180deg, #EBD29A 0%, #E0BF7E 45%, #D4AE6A 100%);
-    box-shadow: inset 0 0 0 1px rgba(120, 82, 30, .35), inset 0 0 28px rgba(120, 82, 30, .25), 0 10px 24px -14px rgba(60, 35, 10, .45);
+    aspect-ratio: 1322 / 416;
+    display: grid;
+    place-items: center;
+    container-type: inline-size;  /* text sizes follow the leaf's width */
+    padding: 4% 7%;
+    background: var(--leaf-s) center / 100% 100% no-repeat;
+    filter: drop-shadow(0 12px 18px rgba(60, 35, 10, .28));
   }
-  /* a thread through both holes */
-  .leaf::before {
-    content: ''; position: absolute; left: -18px; right: -18px; top: 50%; height: 1px;
-    background: linear-gradient(90deg, transparent, #7A1F14 8%, transparent 14%, transparent 86%, #7A1F14 92%, transparent);
-    opacity: .7;
+  @media (min-width: 700px) {
+    .leaf { background-image: var(--leaf-l); }
   }
-  .hole { position: absolute; top: 50%; width: 12px; height: 12px; margin-top: -6px; border-radius: 50%; background: var(--stone); box-shadow: inset 0 1px 2px rgba(60, 35, 10, .6); }
-  .section.alt .hole { background: var(--stone-2); }
-  .hole.left { left: clamp(22px, 4vw, 44px); }
-  .hole.right { right: clamp(22px, 4vw, 44px); }
 
   .text { margin: 0; text-align: center; }
-  .text p { margin: 0; font: 400 clamp(20px, 2.6vw, 28px)/1.7 var(--font-sanskrit); color: #3B2410; text-shadow: 0 1px 0 rgba(255, 245, 220, .45); }
-  .text .num { font-size: clamp(16px, 1.8vw, 19px); color: #6B3A16; margin-top: 4px; }
+  .text p {
+    margin: 0;
+    font: 500 clamp(20px, 6.1cqi, 46px)/1.42 "Hind", var(--font-sanskrit);
+    color: #2E1A0C;
+    /* ink sitting in the leaf, slightly pressed in */
+    mix-blend-mode: multiply;
+    text-shadow: 0 1px 0 rgba(255, 236, 200, .35);
+  }
+  /* Hind's Devanagari digits are drawn like 1 2 3, so the verse number uses Tiro */
+  .text p.num { font-family: var(--font-sanskrit); font-weight: 400; font-size: clamp(17px, 4.2cqi, 32px); margin-top: 0; }
+  .text p.src { font-size: clamp(13px, 2cqi, 17px); text-align: right; opacity: .85; }
 
   figcaption { max-width: 64ch; margin: 22px auto 0; text-align: center; }
 
-  @media (max-width: 560px) {
-    .leaf { border-radius: 28px; padding: 24px 34px; }
-    .hole.left { left: 12px; } .hole.right { right: 12px; }
-    .text p { font-size: 18px; line-height: 1.8; }
+  /* Phones: the leaf grows taller to hold the verse (the photo stretches a little) */
+  @media (max-width: 699px) {
+    .leaf { aspect-ratio: auto; padding: 28px 22px; border-radius: 6px; }
+    .text p { font-size: 20px; line-height: 1.6; }
   }
 </style>
