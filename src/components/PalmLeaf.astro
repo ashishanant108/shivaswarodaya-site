@@ -30,7 +30,9 @@ const leafStyle = `--leaf-s: url('${u('/images/palm-leaf-720.webp')}'); --leaf-l
 </figure>
 
 <style>
+  /* centred on the page wherever it is placed, including inside a text column */
   .leaf-wrap { margin: 0; }
+  :global(.container.prose) > .leaf-wrap { max-width: none; margin: 28px 0 32px; }
   .leaf {
     max-width: 720px;
     min-height: 0;
