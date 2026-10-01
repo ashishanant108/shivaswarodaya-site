@@ -61,11 +61,13 @@ import PalmLeaf from '../components/PalmLeaf.astro';
         <h2>A teaching received from the Guru</h2>
         <p>Swara Yoga is a tantric discipline. Its practices are not meant for self-study from books or videos. They are received from a qualified teacher, who gives them in the right order, at the right time, and watches over the student's practice.</p>
         <p>The Shiva Swarodaya itself says to whom this knowledge should be given:</p>
-        <blockquote class="verse" lang="sa">
-          <p class="dev">शान्ते शुद्धे सदाचारे गुरुभक्त्येकमानसे ।<br />दृढचित्ते कृतज्ञे च देयं चैव स्वरोदयम् ॥</p>
-          <p class="en" lang="en">“Swarodaya should be given to one who is peaceful, pure, of good conduct, whose mind is wholly devoted to the Guru, who is steady of mind and grateful.”</p>
-          <cite lang="en">Shiva Swarodaya, verse 13 (Khemraj Shrikrishnadas edition, with the commentary of Pt. Mihir Chandra). English rendering ours.</cite>
-        </blockquote>
+        <PalmLeaf
+          lines={['शान्ते शुद्धे सदाचारे गुरुभक्त्येकमानसे ।', 'दृढचित्ते कृतज्ञे च देयं चैव स्वरोदयम् ॥']}
+          number="॥ १३ ॥"
+        >
+          <p class="leaf-meaning">“Swarodaya should be given to one who is peaceful, pure, of good conduct, whose mind is wholly devoted to the Guru, who is steady of mind and grateful.”</p>
+          <p class="leaf-cite">Shiva Swarodaya, verse 13 (Khemraj Shrikrishnadas edition, with the commentary of Pt. Mihir Chandra). English rendering ours.</p>
+        </PalmLeaf>
         <p>For this reason, this site explains the teaching and offers only simple, safe observation of the natural breath. The practices themselves are taught by Ma Shakti Devpriya in her courses, in stages, where each step can be guided and every question answered.</p>
       </div>
     </section>
@@ -155,24 +157,12 @@ import PalmLeaf from '../components/PalmLeaf.astro';
       </div>
     </section>
 
-    <section class="section alt" id="sources">
-      <div class="container prose">
-        <h2>Sources</h2>
-        <ol class="sources">
-          <li>Ram Kumar Rai (tr.), <i>Śivasvarodaya: Text with English Translation</i>. Varanasi: Prachya Prakashan. Scanned copy: <a href="https://archive.org/details/yshivasvarodayatextwithenglishtranslationramkumarrai">archive.org</a>.</li>
-          <li><i>Śivasvarodaya</i>, with the Hindi commentary of Mahamahopadhyaya Pt. Mihir Chandra. Mumbai: Khemraj Shrikrishnadas, Shri Venkateshwar Press. Scanned copy: <a href="https://archive.org/details/jyotish-mein-svara-vigyan-ka-mahatva-kedar-nath-joshi_202012">archive.org</a>. Source of verses 13 and 21 quoted above.</li>
-          <li>Swami Muktibodhananda, <i>Swara Yoga: The Tantric Science of Brain Breathing</i>. Munger: Bihar School of Yoga, 1984. Includes the text and a translation of the Shiva Swarodaya.</li>
-          <li>A. L. Pendolino et al., “The nasal cycle: a comprehensive review”, <i>Rhinology Online</i> 1 (2018). <a href="https://www.rhinologyonline.org/Rhinology_online_issues/2018/18021_Pendolino.pdf">rhinologyonline.org</a>.</li>
-          <li>D. A. Werntz, R. G. Bickford, F. E. Bloom, D. S. Shannahoff-Khalsa, “Alternating cerebral hemispheric activity and the lateralization of autonomic nervous function”, <i>Human Neurobiology</i> 2 (1983).</li>
-          <li>A. Price and R. Eccles, “Nasal airflow and brain activity: is there a link?”, <i>The Journal of Laryngology &amp; Otology</i> 130 (2016): 794–799.</li>
-          <li>Profile of Ma Shakti Devpriya, The Shakti Multiversity: <a href="https://www.shaktimultiversity.com/master-detail/ma-shakti-devpriya">shaktimultiversity.com</a>.</li>
-        </ol>
-      </div>
-    </section>
   </article>
 </Base>
 
 <style>
+  .leaf-meaning { font: 400 clamp(17px, 1.7vw, 19px)/1.6 var(--font-display); color: var(--ink); margin: 0 0 8px; }
+  .leaf-cite { font: 400 13px/1.5 var(--font-ui); color: var(--muted); margin: 0; }
   .leaf-section .translit { font: 400 16px/1.7 var(--font-body); color: var(--muted); margin: 0 0 10px; }
   .leaf-section .meaning { font: 400 clamp(18px, 1.8vw, 20px)/1.6 var(--font-display); color: var(--ink); margin: 0 0 10px; }
   .leaf-section .cite { font: 400 13px/1.5 var(--font-ui); color: var(--muted); margin: 0; }

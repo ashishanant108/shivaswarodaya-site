@@ -2,7 +2,7 @@
 /**
  * A Sanskrit verse written on a palm leaf (tala-patra).
  * The leaf is a photograph (public/images/palm-leaf-*.webp, cut out from
- * Images/Palm leaf.png); the verse is live text set in Hind, dark brown, to
+ * Images/Palm leaf.png, with a strip taken out of the middle to shorten it); the verse is live text set in Hind, dark brown, to
  * match the "Shloka Style" sample. Live text stays sharp, searchable and
  * readable by screen readers, and any verse can be placed on the same leaf.
  * Only use verses checked against a named edition (see Tracker A-21).
@@ -16,7 +16,7 @@ interface Props {
   source?: string;          // optional small label on the leaf, e.g. "(शिवस्वरोदय)"
 }
 const { lines, number, source } = Astro.props;
-const leafStyle = `--leaf-s: url('${u('/images/palm-leaf-800.webp')}'); --leaf-l: url('${u('/images/palm-leaf-1320.webp')}');`;
+const leafStyle = `--leaf-s: url('${u('/images/palm-leaf-720.webp')}'); --leaf-l: url('${u('/images/palm-leaf-1020.webp')}');`;
 ---
 <figure class="leaf-wrap">
   <div class="leaf" lang="sa" style={leafStyle}>
@@ -32,14 +32,14 @@ const leafStyle = `--leaf-s: url('${u('/images/palm-leaf-800.webp')}'); --leaf-l
 <style>
   .leaf-wrap { margin: 0; }
   .leaf {
-    max-width: 840px;
+    max-width: 720px;
     min-height: 0;
     margin: 0 auto;
-    aspect-ratio: 1322 / 416;
+    aspect-ratio: 1020 / 416;
     display: grid;
     place-items: center;
     container-type: inline-size;  /* text sizes follow the leaf's width */
-    padding: 4% 7%;
+    padding: 4% 6%;
     background: var(--leaf-s) center / 100% 100% no-repeat;
     filter: drop-shadow(0 12px 18px rgba(60, 35, 10, .28));
   }
@@ -50,14 +50,14 @@ const leafStyle = `--leaf-s: url('${u('/images/palm-leaf-800.webp')}'); --leaf-l
   .text { margin: 0; text-align: center; }
   .text p {
     margin: 0;
-    font: 500 clamp(20px, 6.1cqi, 46px)/1.42 "Hind", var(--font-sanskrit);
+    font: 500 clamp(20px, 6.9cqi, 46px)/1.42 "Hind", var(--font-sanskrit);
     color: #2E1A0C;
     /* ink sitting in the leaf, slightly pressed in */
     mix-blend-mode: multiply;
     text-shadow: 0 1px 0 rgba(255, 236, 200, .35);
   }
   /* Hind's Devanagari digits are drawn like 1 2 3, so the verse number uses Tiro */
-  .text p.num { font-family: var(--font-sanskrit); font-weight: 400; font-size: clamp(17px, 4.2cqi, 32px); margin-top: 0; }
+  .text p.num { font-family: var(--font-sanskrit); font-weight: 400; font-size: clamp(17px, 4.6cqi, 32px); margin-top: 0; }
   .text p.src { font-size: clamp(13px, 2cqi, 17px); text-align: right; opacity: .85; }
 
   figcaption { max-width: 64ch; margin: 22px auto 0; text-align: center; }
