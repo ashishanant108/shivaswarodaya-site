@@ -8,7 +8,11 @@
  *    student's email and first name only are added to the Brevo list, which starts
  *    the welcome email and the 8 daily emails.
  *  - Contact form → new row in the "Messages" tab, and a notification email to you.
- *  - Brevo unsubscribe webhook (optional) → marks the student as unsubscribed in the Sheet.
+ *  - Brevo unsubscribe webhook → marks the student "Unsubscribed" and adds the email and date
+ *    to the "Unsubscribed" tab, so the team can always see who has opted out.
+ *  - dailyCleanup() (run once a day by a trigger) applies the retention rules in the
+ *    Privacy policy: unsubscribed rows deleted after 30 days (the email + date stay in the
+ *    "Unsubscribed" tab), registrations deleted 5 years after the last activity, messages after 3 years.
  *
  * Script properties (Project Settings → Script properties):
  *   BREVO_API_KEY   your Brevo API key (never put it in the website code)
@@ -20,6 +24,8 @@
 const REG_HEADERS = ['Registered (IST)', 'First name', 'Email', 'Country', 'WhatsApp', 'Experience',
   'Consent given', 'Consent text version', 'Page', 'Sent to Brevo', 'Status', 'Status updated'];
 const MSG_HEADERS = ['Received (IST)', 'Name', 'Email', 'Topic', 'Message', 'Replied'];
+const UNSUB_HEADERS = ['Email', 'Unsubscribed on (IST)'];
+const KEEP = { unsubscribedDays: 30, registrationYears: 5, messageYears: 3 };   // Privacy policy, section 7
 const CONSENT_VERSION = '2026-10-07';
 
 function doPost(e) {
@@ -52,6 +58,9 @@ function register_(p) {
       'Yes', CONSENT_VERSION, clean_(p.page), '', 'Registered', now_()];
     sh.getRange(row, 1, 1, values.length).setValues([values]);
 
+    // Registering again is fresh consent: a new record starts, the opt-out record is cleared.
+    const un = sheet_('Unsubscribed', UNSUB_HEADERS); const u = findRow_(un, 1, email); if (u) un.deleteRow(u);
+
     const sent = toBrevo_(email, first);
     sh.getRange(row, 10).setValue(sent ? 'Yes' : 'Failed: retry');
     return json_({ ok: true });
@@ -77,26 +86,70 @@ function toBrevo_(email, first) {
   const res = UrlFetchApp.fetch('https://api.brevo.com/v3/contacts', {
     method: 'post', contentType: 'application/json', muteHttpExceptions: true,
     headers: { 'api-key': key, accept: 'application/json' },
-    payload: JSON.stringify({ email, attributes: { FIRSTNAME: first }, listIds: [list], updateEnabled: true }),
+    payload: JSON.stringify({ email, attributes: { FIRSTNAME: first }, listIds: [list], updateEnabled: true, emailBlacklisted: false }),
   });
   const code = res.getResponseCode();
   if (code >= 300) console.error('Brevo ' + code + ': ' + res.getContentText());
   return code < 300;
 }
 
-/** Brevo → "Transactional/Marketing webhooks": event "unsubscribed" marks the row. */
+/** Brevo webhook, event "unsubscribed": marks the row and logs email + date in the "Unsubscribed" tab. */
 function brevoHook_(e, p) {
   const token = PropertiesService.getScriptProperties().getProperty('HOOK_TOKEN');
   if (!token || p.token !== token) return json_({ ok: false });
   const body = JSON.parse((e.postData && e.postData.contents) || '{}');
   const events = Array.isArray(body) ? body : [body];
-  const sh = sheet_('Registrations', REG_HEADERS);
+  const reg = sheet_('Registrations', REG_HEADERS);
+  const un = sheet_('Unsubscribed', UNSUB_HEADERS);
   events.forEach((ev) => {
-    if (!ev || !ev.email) return;
-    const row = findRow_(sh, 3, String(ev.email).toLowerCase());
-    if (row && /unsub/i.test(ev.event || '')) sh.getRange(row, 11, 1, 2).setValues([['Unsubscribed', now_()]]);
+    if (!ev || !ev.email || !/unsub/i.test(ev.event || '')) return;
+    const email = String(ev.email).toLowerCase();
+    const row = findRow_(reg, 3, email);
+    if (row) reg.getRange(row, 11, 1, 2).setValues([['Unsubscribed', now_()]]);
+    const u = findRow_(un, 1, email);
+    if (u) un.getRange(u, 2).setValue(now_()); else un.appendRow([email, now_()]);
   });
   return json_({ ok: true });
+}
+
+/**
+ * Retention rules from the Privacy policy (section 7). Runs daily once
+ * setupDailyCleanup() has been run one time from the editor.
+ */
+function dailyCleanup() {
+  const now = Date.now(), day = 864e5;
+  const reg = sheet_('Registrations', REG_HEADERS);
+  const rows = reg.getDataRange().getValues();
+  for (let i = rows.length - 1; i >= 1; i--) {
+    const status = String(rows[i][10]);
+    const statusAt = parse_(rows[i][11]) || parse_(rows[i][0]);
+    const lastActivity = Math.max(parse_(rows[i][0]) || 0, statusAt || 0);
+    const goneUnsub = status === 'Unsubscribed' && statusAt && now - statusAt > KEEP.unsubscribedDays * day;
+    const tooOld = lastActivity && now - lastActivity > KEEP.registrationYears * 365.25 * day;
+    if (goneUnsub || tooOld) {
+      if (tooOld && status !== 'Unsubscribed') deleteFromBrevo_(rows[i][2]);
+      reg.deleteRow(i + 1);
+    }
+  }
+  const msg = sheet_('Messages', MSG_HEADERS);
+  const m = msg.getDataRange().getValues();
+  for (let i = m.length - 1; i >= 1; i--) {
+    const at = parse_(m[i][0]);
+    if (at && now - at > KEEP.messageYears * 365.25 * day) msg.deleteRow(i + 1);
+  }
+}
+
+/** Run once by hand: schedules dailyCleanup() every night around 3 am. */
+function setupDailyCleanup() {
+  ScriptApp.getProjectTriggers().filter((t) => t.getHandlerFunction() === 'dailyCleanup').forEach((t) => ScriptApp.deleteTrigger(t));
+  ScriptApp.newTrigger('dailyCleanup').timeBased().everyDays(1).atHour(3).inTimezone('Asia/Kolkata').create();
+}
+
+function deleteFromBrevo_(email) {
+  const key = PropertiesService.getScriptProperties().getProperty('BREVO_API_KEY');
+  if (!key || !email) return;
+  UrlFetchApp.fetch('https://api.brevo.com/v3/contacts/' + encodeURIComponent(email) + '?identifierType=email_id',
+    { method: 'delete', headers: { 'api-key': key }, muteHttpExceptions: true });
 }
 
 /** Run by hand from the editor: re-sends rows marked "Failed: retry" to Brevo. */
@@ -125,6 +178,11 @@ function clean_(v, max) {
   let s = String(v == null ? '' : v).trim().slice(0, max || 200);
   if (/^[=+\-@]/.test(s)) s = "'" + s;                 // stops text being read as a spreadsheet formula
   return s;
+}
+function parse_(v) {
+  if (v instanceof Date) return v.getTime();
+  const m = String(v || '').match(/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})/);
+  return m ? Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5]) - 5.5 * 36e5 : 0;   // stored in IST
 }
 function now_() { return Utilities.formatDate(new Date(), 'Asia/Kolkata', 'yyyy-MM-dd HH:mm'); }
 function json_(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
