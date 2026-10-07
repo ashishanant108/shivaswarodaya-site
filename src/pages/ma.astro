@@ -1,0 +1,55 @@
+---
+import { u } from '../lib/url';
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { swarodayaSeries as series } from '../data/site';
+---
+<Base title="Ma Shakti Devpriya" description="Ma Shakti Devpriya teaches Swara Yoga and Tantra in the Sri Vidya Krama tradition. Co-founder of The Shakti Multiversity." ogImage="/og/home.jpg" ogImageAlt="Ma Shakti Devpriya">
+  <PageIntro
+    sanskrit="श्री गुरु"
+    eyebrow="The teacher"
+    title="Ma Shakti Devpriya"
+    lede="Known to her students as Ma Shakti or Guruma, she teaches Swara Yoga as it is received in her tradition: carefully, in stages, and from teacher to student."
+  />
+
+  <section class="section">
+    <div class="container ma">
+      <img src={u('/images/ma-portrait.webp')} srcset={`${u('/images/ma-portrait-300.webp')} 300w, ${u('/images/ma-portrait.webp')} 520w`} sizes="(max-width: 640px) 220px, 300px" alt="Ma Shakti Devpriya" width="520" height="605" decoding="async" />
+      <div class="prose">
+        <h2>Her path</h2>
+        <p>Ma Shakti Devpriya is a co-founder of The Shakti Multiversity with her consort, Acharya Agyaatadarshan Anand Nath. She is <em>poornabhishiktaa</em> in the Sri Vidya Kaula Krama tradition and has been immersed in Tantra since 2006. She began teaching publicly in late 2012, with the permission of her Gurudev, Shri Shivanand Nath ji.</p>
+        <p>With Acharya ji she was also initiated into Vama Tantra by Gurudev Shri Kaleshwaranand ji (Kali Baba) of Rishikesh. The teachers of both lines are honoured on the <a href={u('/lineage')}>Lineage</a> page.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container prose">
+      <h2>Her teaching</h2>
+      <p>Swara Yoga is central to her teaching, together with the Panchamahabhutas (the five great elements), traditional symbolism (Prachya Prateek Vigyaan) and mandalas. She is the author of <em>Tattva Shakti Vigyaan: Tantra for Modern Man</em>.</p>
+      <p>Her students include yoga teachers, doctors, business leaders and homemakers.</p>
+      <p>She has taught the Shiva Swarodaya verse by verse in a complete video series, in English and Hindi.</p>
+      <div class="btn-row">
+        <a class="btn btn-ghost" href={series.english} target="_blank" rel="noopener">Watch the series on YouTube</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="container prose">
+      <p class="eyebrow">Learning with Ma</p>
+      <h2>Begin with your own breath</h2>
+      <p>The free eight-day course, Meet your Swara, is the first step. From there the study continues online in the foundation course, and in person in Sadhana &amp; Practice and the annual retreat.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href={u('/courses/meet-your-swara')}>Begin “Meet your Swara”</a>
+        <a class="btn btn-ghost" href={u('/courses')}>All courses</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ma { display: grid; grid-template-columns: 300px 1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
+  .ma img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; border-radius: 999px 999px 14px 14px; }
+  @media (max-width: 700px) { .ma { grid-template-columns: 1fr; } .ma img { width: min(240px, 66%); } }
+</style>

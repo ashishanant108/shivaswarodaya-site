@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import { u } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import PageIntro from '../components/PageIntro.astro';
-import { social } from '../data/site';
+import { social, swarodayaSeries as series } from '../data/site';
 
 const videos = (await getCollection('videos')).sort((a, b) => a.data.order - b.data.order);
 const youtube = social.find((s) => s.id === 'youtube')?.href || '';
@@ -17,7 +17,28 @@ const placeholders = Math.max(0, 6 - videos.length);
     lede="Short introductions to Swara Yoga and the Shiva Swarodaya by Ma Shakti Devpriya."
   />
 
-  <section class="section" style="padding-top: 8px">
+  <section class="section">
+    <div class="container">
+      <article class="series">
+        <a class="series-thumb" href={series.english} target="_blank" rel="noopener" aria-label="Complete Shiva Swarodaya, English playlist (opens YouTube in a new tab)">
+          <span class="series-dev" lang="sa" aria-hidden="true">शिवस्वरोदय</span>
+          <span class="series-sub" aria-hidden="true">Complete series · Ma Shakti Devpriya</span>
+          <span class="play" aria-hidden="true"></span>
+        </a>
+        <div class="series-text">
+          <p class="eyebrow">Video series</p>
+          <h2>The complete Shiva Swarodaya</h2>
+          <p>Ma Shakti Devpriya goes through the Shiva Swarodaya verse by verse, explaining what the text says and how it is understood in the tradition.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" href={series.english} target="_blank" rel="noopener">Watch in English</a>
+            <a class="btn btn-ghost" href={series.hindi || series.hindiChannel} target="_blank" rel="noopener">{series.hindi ? 'Watch in Hindi' : 'Hindi (on YouTube)'}</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
     <div class="container">
       <ul class="grid">
         {videos.map((v) => (
@@ -53,6 +74,16 @@ const placeholders = Math.max(0, 6 - videos.length);
 </Base>
 
 <style>
+  .series { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(24px, 4vw, 48px); align-items: center; padding-bottom: clamp(32px, 4vw, 48px); border-bottom: 1px solid var(--rule); }
+  .series-thumb { position: relative; display: grid; place-items: center; align-content: center; gap: 10px; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; text-decoration: none; background: radial-gradient(ellipse at 50% 115%, #5A1414 0%, #2A0709 55%, #000 100%); }
+  .series-thumb::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: linear-gradient(90deg, #9D7636, #F2D9A0, #9D7636); }
+  .series-dev { font: 400 clamp(34px, 5vw, 58px)/1.1 var(--font-sanskrit); color: var(--gold-light); }
+  .series-sub { font: 500 12px/1 var(--font-ui); letter-spacing: .16em; text-transform: uppercase; color: #CDB488; }
+  .series-thumb .play { position: absolute; right: 18px; bottom: 18px; width: 48px; height: 48px; }
+  .series-thumb .play::before { left: 19px; top: 14px; border-left-width: 14px; border-top-width: 9px; border-bottom-width: 9px; }
+  .series-thumb:hover .play { background: var(--kumkum); }
+  .series-text h2 { margin-bottom: 10px; }
+  @media (max-width: 820px) { .series { grid-template-columns: 1fr; } }
   .grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px 28px; }
   .video h2 { font-size: 21px; margin: 14px 0 6px; }
   .video p { margin: 0; color: var(--muted); font-size: 16px; }

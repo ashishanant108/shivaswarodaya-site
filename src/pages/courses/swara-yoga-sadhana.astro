@@ -1,12 +1,16 @@
 ---
-import Base from '../../layouts/Base.astro';
-import PageIntro from '../../components/PageIntro.astro';
+// Old address of the foundation course page; sends visitors to the new one.
+import { u } from '../../lib/url';
+const to = u('/courses/foundation');
 ---
-<Base title="Swara Yoga Sadhana">
-  <PageIntro eyebrow="Foundation course" title="Swara Yoga Sadhana" lede="A structured, pre-recorded course in the study and practice of Swara Yoga." />
-  <section class="section" style="padding-top:0">
-    <div class="container prose">
-      <p class="draft-note">Draft page. Curriculum, format and enrolment details to come.</p>
-    </div>
-  </section>
-</Base>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content={`0; url=${to}`} />
+    <link rel="canonical" href={to} />
+    <title>Foundation course</title>
+  </head>
+  <body><p><a href={to}>The foundation course has moved here.</a></p></body>
+</html>

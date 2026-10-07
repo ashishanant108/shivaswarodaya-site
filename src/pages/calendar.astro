@@ -1,49 +1,27 @@
 ---
-import { getCollection } from 'astro:content';
 import { u } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import PageIntro from '../components/PageIntro.astro';
 import SocialLinks from '../components/SocialLinks.astro';
+import Sessions from '../components/Sessions.astro';
 
-const today = new Date(new Date().toDateString());
-const all = (await getCollection('events')).sort((a, b) => +a.data.date - +b.data.date);
-const upcoming = all.filter((e) => e.data.date >= today);
-const kinds: Record<string, string> = { course: 'Course', live: 'Live session', festival: 'Sacred day', other: 'Event' };
-const fmt = (d: Date, o: Intl.DateTimeFormatOptions) => d.toLocaleDateString('en-IN', { ...o, timeZone: 'Asia/Kolkata' });
 ---
-<Base title="Calendar" description="Upcoming course batches, live sessions and sacred days at Shiva Swarodaya." ogImage="/og/default.jpg">
+<Base title="Calendar" description="Weekly sessions with Ma Shakti Devpriya, course batches and the annual Swara Yoga retreat." ogImage="/og/default.jpg">
   <PageIntro
     sanskrit="काल"
-    eyebrow="Dates"
+    eyebrow="Weekly sessions and dates"
     title="Calendar"
-    lede="Upcoming course batches, live sessions with Ma Shakti Devpriya, and sacred days in the tradition."
+    lede="Weekly sessions with Ma Shakti Devpriya, course batches and the annual retreat."
   />
 
-  <section class="section" style="padding-top: 8px">
+  <section class="section">
     <div class="container">
-      {upcoming.length > 0 ? (
-        <ol class="events">
-          {upcoming.map((e) => (
-            <li>
-              <time class="date" datetime={e.data.date.toISOString().slice(0, 10)}>
-                <span class="d">{fmt(e.data.date, { day: 'numeric' })}</span>
-                <span class="m">{fmt(e.data.date, { month: 'short' })}</span>
-                <span class="y">{fmt(e.data.date, { year: 'numeric' })}</span>
-              </time>
-              <div class="info">
-                <p class="kind">{kinds[e.data.kind]}</p>
-                <h2>{e.data.title}</h2>
-              </div>
-              {e.data.link && <a class="btn btn-ghost btn-sm" href={u(e.data.link)}>Details</a>}
-            </li>
-          ))}
-        </ol>
-      ) : (
+      <Sessions headingLevel="h2">
         <div class="empty">
           <span class="empty-dev" lang="sa" aria-hidden="true">काल</span>
           <div>
             <h2>Dates will be announced here</h2>
-            <p>The first batch of <em>Meet your Swara</em> and the first live sessions with Ma Shakti Devpriya will be listed on this page. The free course can be started at any time.</p>
+            <p>Weekly sessions with Ma Shakti Devpriya, course batches and the annual retreat will be listed on this page. The free course, <em>Meet your Swara</em>, can be started at any time.</p>
             <div class="btn-row">
               <a class="btn btn-primary" href={u('/courses/meet-your-swara')}>Begin “Meet your Swara”</a>
             </div>
@@ -51,7 +29,7 @@ const fmt = (d: Date, o: Intl.DateTimeFormatOptions) => d.toLocaleDateString('en
             <SocialLinks />
           </div>
         </div>
-      )}
+      </Sessions>
     </div>
   </section>
 </Base>

@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import CourseDetail from '../../components/CourseDetail.astro';
+
+const faqs = [
+  { q: 'Do I need to take Meet your Swara first?', a: 'It is the natural starting point. The foundation course assumes that you can already notice which side the breath is flowing through, which is what Meet your Swara teaches.' },
+  { q: 'Is the course live or recorded?', a: 'It is an online course. The exact format, recorded lessons, live sessions with Ma or both, will be announced with the first batch.' },
+  { q: 'How much time will it need each day?', a: 'Expect a regular daily practice and some study each week. The exact time will be given with the course details.' },
+  { q: 'Is there a fee?', a: 'Yes. The fee will be announced with the course dates. Write to us if you would like to be told when enrolment opens.' },
+  { q: 'Is it safe if I have a health condition?', a: 'The course does not use forceful breathing. If you have a respiratory, heart or other health condition, or are pregnant, speak to your doctor first and mention it when you enrol so that the practice can be adapted.' },
+  { q: 'Does the course replace learning from a teacher?', a: 'No. It is taught by Ma Shakti Devpriya and is one stage of learning from her. Deeper practices are given directly, when the student is ready.' },
+];
+---
+<Base title="Foundation course" description="The online foundation course in Swara Yoga with Ma Shakti Devpriya: a structured study of the Shiva Swarodaya and guided practice, in stages." ogImage="/og/courses.jpg">
+  <CourseDetail
+    sanskrit="आधार"
+    eyebrow="Online · after Meet your Swara"
+    title="Foundation course"
+    lede="A structured online course in the study and practice of Swara Yoga, taught in stages by Ma Shakti Devpriya."
+    facts={[['Format', 'Online'], ['Level', 'After Meet your Swara'], ['Teacher', 'Ma Shakti Devpriya'], ['Fee', 'To be announced'], ['Next batch', 'Dates to be announced']]}
+    sections={[
+      { title: 'What the course covers', paras: [
+        'Meet your Swara teaches you to notice the breath. The foundation course begins the study itself: the three flows of Ida, Pingala and Sushumna, the five tattvas, and the rhythms of the day as the Shiva Swarodaya describes them.',
+        'Study and practice go together. Each stage adds a little understanding of the text and a practice that grows from it, so that what is read is also observed in one’s own breath.',
+      ] },
+      { title: 'Who it is for', paras: [
+        'Those who have completed Meet your Swara, or already observe their Swara, and wish to study and practise regularly under guidance.',
+      ] },
+    ]}
+    draft="Draft for Ma: please confirm the format (recorded, live or both), length, number of stages, fee and the first batch dates."
+    faqs={faqs}
+    ctaText="Tell me when enrolment opens"
+    ctaTopic="Foundation course (online)"
+    ctaNote="Enrolment and payment will open with the first batch."
+  />
+</Base>

@@ -1,0 +1,65 @@
+---
+import { u } from '../lib/url';
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { swarodayaSeries as series } from '../data/site';
+---
+<Base title="Resources" description="Resources for the study of Swara Yoga and the Shiva Swarodaya: a book by Ma Shakti Devpriya (coming soon) and the complete video series.">
+  <PageIntro
+    sanskrit="स्वाध्याय"
+    eyebrow="For study"
+    title="Resources"
+    lede="Material for study alongside the courses. More will be added over time."
+  />
+
+  <section class="section">
+    <div class="container">
+      <ul class="res">
+        <li class="item">
+          <div class="cover book" aria-hidden="true"><span lang="sa">ग्रन्थ</span><em>Coming soon</em></div>
+          <div class="body">
+            <p class="eyebrow">Book · coming soon</p>
+            <h2>A book by Ma Shakti Devpriya</h2>
+            <p>Details will be shared here when it is published. Register for Meet your Swara or follow on Instagram and YouTube to hear first.</p>
+          </div>
+        </li>
+        <li class="item">
+          <div class="cover series" aria-hidden="true"><span lang="sa">शिवस्वरोदय</span><em>Video series</em></div>
+          <div class="body">
+            <p class="eyebrow">Video series</p>
+            <h2>The complete Shiva Swarodaya</h2>
+            <p>Ma Shakti Devpriya goes through the text verse by verse, in English and in Hindi.</p>
+            <div class="btn-row">
+              <a class="btn btn-ghost btn-sm" href={series.english} target="_blank" rel="noopener">English</a>
+              <a class="btn btn-ghost btn-sm" href={series.hindi || series.hindiChannel} target="_blank" rel="noopener">Hindi</a>
+            </div>
+          </div>
+        </li>
+        <li class="item">
+          <div class="cover tracker" aria-hidden="true"><span lang="sa">स्वर</span><em>Daily tracker</em></div>
+          <div class="body">
+            <p class="eyebrow">With Meet your Swara</p>
+            <h2>Daily Swara tracker</h2>
+            <p>A simple sheet for recording which side the breath is flowing through during the day. It comes with the free course.</p>
+            <a class="btn btn-ghost btn-sm" href={u('/courses/meet-your-swara')}>Meet your Swara</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .res { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+  .item { display: grid; grid-template-columns: 240px 1fr; gap: clamp(20px, 4vw, 40px); align-items: center; border: 1px solid var(--rule); border-radius: 16px; padding: 20px; background: var(--stone); }
+  .cover { position: relative; display: grid; place-items: center; align-content: center; gap: 8px; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; }
+  .cover::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: linear-gradient(90deg, #9D7636, #F2D9A0, #9D7636); }
+  .cover span { font: 400 clamp(30px, 4vw, 40px)/1.1 var(--font-sanskrit); color: var(--gold-light); }
+  .cover em { font: 500 11px/1 var(--font-ui); font-style: normal; letter-spacing: .16em; text-transform: uppercase; color: #E6D3AE; }
+  .book { background: radial-gradient(ellipse at 50% 120%, #6A1A1E 0%, #3B0A0E 60%, #1C0507 100%); }
+  .series { background: radial-gradient(ellipse at 50% 115%, #5A1414 0%, #2A0709 55%, #000 100%); }
+  .tracker { background: radial-gradient(ellipse at 50% 120%, #6B4A22 0%, #3A2410 55%, #1A0F06 100%); }
+  .body h2 { font-size: clamp(22px, 2.6vw, 28px); margin-bottom: 8px; }
+  .body p:not(.eyebrow) { color: var(--muted); }
+  @media (max-width: 640px) { .item { grid-template-columns: 1fr; } }
+</style>

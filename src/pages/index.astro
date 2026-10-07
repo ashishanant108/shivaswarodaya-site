@@ -3,6 +3,9 @@ import { u } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import HeroAnimated from '../components/HeroAnimated.astro';
 import PalmLeaf from '../components/PalmLeaf.astro';
+import Sessions from '../components/Sessions.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import { swarodayaSeries as series, experiences, contactEmail } from '../data/site';
 
 const path = [
   { term: 'Breath', dev: 'श्वास', text: 'The movement of air that anyone can observe.' },
@@ -12,19 +15,43 @@ const path = [
   { term: 'Tattva', dev: 'तत्त्व', text: 'The five elements, which the Shiva Swarodaya describes as arising in turn within each Swara.' },
   { term: 'Awareness', dev: 'बोध', text: 'Where the study leads: steady attention to what is subtle.' },
 ];
+
+const includes = [
+  ['8 days', 'One short lesson a day'],
+  ['10 minutes', 'A video and a few minutes of practice'],
+  ['Daily tracker', 'To record your Swara through the day'],
+  ['Guided meditation', 'With Ma Shakti Devpriya'],
+  ['Beginner friendly', 'No experience of yoga needed'],
+  ['By email', 'A welcome email, then a link each day'],
+];
+
+const journey = [
+  { href: '/courses/foundation', dev: 'आधार', tag: 'Online', title: 'Foundation course', text: 'A structured study of the Shiva Swarodaya with guided practice, in stages.' },
+  { href: '/courses/sadhana-practice', dev: 'साधना', tag: 'In person · practitioner', title: 'Sadhana & Practice', text: 'Practice guided directly by Ma, for those who have completed the foundation course.' },
+  { href: '/courses/retreat', dev: 'एकान्त', tag: 'Once a year', title: 'Annual retreat', text: 'A few days set apart for practice, study and quiet with Ma.' },
+];
+
+const faqs = [
+  { q: 'What is Swara Yoga?', a: 'Swara Yoga is the tantric science of Prana as it is read through the flow of breath: which nostril is flowing, how the flow changes, and what the Shiva Swarodaya teaches about each flow. It is a different discipline from pranayama and from modern breathwork.' },
+  { q: 'Do I need any experience?', a: 'No. Meet your Swara starts from the very beginning and uses only observation of the natural breath.' },
+  { q: 'Can I learn Swara Yoga from this website?', a: 'The website explains the teaching. The practices themselves are received from a teacher, in stages. That is why the courses are taught by Ma Shakti Devpriya directly.' },
+  { q: 'Is Swara Yoga a treatment for illness?', a: 'No. Swara Yoga is a spiritual discipline, not a medical treatment. If you have a health condition, keep following your doctor’s advice.' },
+];
 ---
-<Base title="Home" heroHeader ogImage="/og/home.jpg" ogImageAlt="Ma Shakti Devpriya with the Shiva Swarodaya emblem">
+<Base title="Home" description="Swara Yoga, the wisdom of breath: the practice of becoming aware, as taught in the Shiva Swarodaya by Ma Shakti Devpriya." heroHeader ogImage="/og/home.jpg" ogImageAlt="Ma Shakti Devpriya with the Shiva Swarodaya emblem">
   <HeroAnimated />
 
+  <!-- 1 · Tagline -->
   <section class="section intro" id="intro">
     <div class="container intro-grid">
       <div class="prose">
-        <p class="eyebrow">Swara Yoga · Shiva Swarodaya</p>
-        <h1>The breath is visible. Prana is subtle.</h1>
+        <p class="eyebrow">Shiva Swarodaya · Ma Shakti Devpriya</p>
+        <h1>Swara Yoga: Wisdom of Breath</h1>
+        <p class="tagline">The practice of becoming aware</p>
         <p class="lede">Swara Yoga is the tantric science of Prana, read through the flow of breath. Its scripture, the Shiva Swarodaya, is the dialogue in which Shiva reveals this knowledge to Parvati, calling it the highest of all secrets.</p>
         <p>This site honours that teaching and introduces it carefully, in plain language, as it lives in an unbroken tradition. Its practices are received from the Guru.</p>
         <div class="btn-row">
-          <a class="btn btn-primary" href={u('/courses/meet-your-swara')}>Begin “Meet your Swara” · 7 days, free</a>
+          <a class="btn btn-primary" href={u('/courses/meet-your-swara')}>Begin “Meet your Swara” · free</a>
           <a class="btn btn-ghost" href={u('/about')}>What is Swara Yoga?</a>
         </div>
       </div>
@@ -40,18 +67,30 @@ const path = [
     </div>
   </section>
 
-  <section class="section alt leaf-band">
+  <!-- 2 · The Shiva Swarodaya, and the video series -->
+  <section class="section band scripture">
     <div class="container">
       <PalmLeaf
         lines={['स्वरज्ञानात्परं गुह्यं स्वरज्ञानात्परं धनम् ।', 'स्वरज्ञानात्परं ज्ञानं न वा दृष्टं न वा श्रुतम् ॥']}
         number="॥ २१ ॥"
       >
         <p class="meaning">“There is no secret higher than the knowledge of Swara, and no wealth higher than the knowledge of Swara. A knowledge higher than the knowledge of Swara has never been seen or heard.”</p>
-        <p class="cite">Shiva Swarodaya, verse 21 (Khemraj Shrikrishnadas edition) · <a href={u('/about')}>About the scripture</a></p>
       </PalmLeaf>
+      <div class="watch">
+        <div>
+          <p class="eyebrow">Watch on YouTube</p>
+          <h2>The complete Shiva Swarodaya</h2>
+          <p>Ma Shakti Devpriya goes through the text verse by verse, explaining what it says and how it is understood in the tradition.</p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn-primary" href={series.english} target="_blank" rel="noopener">Watch in English</a>
+          <a class="btn btn-ghost" href={series.hindi || series.hindiChannel} target="_blank" rel="noopener">{series.hindi ? 'Watch in Hindi' : 'Hindi (on YouTube)'}</a>
+        </div>
+      </div>
     </div>
   </section>
 
+  <!-- 3 · Path of study -->
   <section class="section">
     <div class="container">
       <p class="eyebrow">The path of study</p>
@@ -68,49 +107,147 @@ const path = [
     </div>
   </section>
 
-  <section class="section alt">
+  <!-- 4 · Free course -->
+  <section class="section alt" id="free-course">
     <div class="container course">
       <div class="prose">
         <p class="eyebrow">Free course</p>
         <h2>Meet your Swara</h2>
-        <p>Seven short, pre-recorded lessons to begin observing your own breath the way the tradition describes. No experience needed. Each day takes a few minutes of watching and a few minutes of quiet practice.</p>
-        <p class="meta">7 days · pre-recorded · free</p>
+        <p>Eight short lessons with Ma Shakti Devpriya to begin observing your own breath the way the Shiva Swarodaya describes. Registration is free and takes a minute.</p>
         <div class="btn-row">
-          <a class="btn btn-primary" href={u('/courses/meet-your-swara')}>Enrol free</a>
-          <a class="btn btn-ghost" href={u('/courses')}>All courses</a>
+          <a class="btn btn-primary" href={u('/courses/meet-your-swara#join')}>Register free</a>
+          <a class="btn btn-ghost" href={u('/courses/meet-your-swara')}>See the eight days</a>
         </div>
       </div>
-      <aside class="next">
-        <p class="eyebrow">Afterwards</p>
-        <h3>Swara Yoga Sadhana</h3>
-        <p>The foundation course, for those who want to study and practise systematically.</p>
-        <a href={u('/courses/swara-yoga-sadhana')}>About the foundation course →</a>
-      </aside>
+      <ul class="includes">
+        {includes.map(([k, v]) => (<li><strong>{k}</strong><span>{v}</span></li>))}
+      </ul>
     </div>
   </section>
 
+  <!-- 5 · Continue your journey -->
+  <section class="section band">
+    <div class="container">
+      <p class="eyebrow">After Meet your Swara</p>
+      <h2>Continue your journey</h2>
+      <ul class="journey">
+        {journey.map((j) => (
+          <li>
+            <a href={u(j.href)} data-dev={j.dev}>
+              <span class="j-tag">{j.tag}</span>
+              <span class="j-title">{j.title}</span>
+              <span class="j-text">{j.text}</span>
+              <span class="j-more" aria-hidden="true">Learn more →</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 6 · The teacher -->
   <section class="section">
     <div class="container teacher">
       <img src={u('/images/ma-portrait.webp')} srcset={`${u('/images/ma-portrait-300.webp')} 300w, ${u('/images/ma-portrait.webp')} 520w`} sizes="(max-width: 640px) 240px, 280px" alt="Ma Shakti Devpriya" width="520" height="605" loading="lazy" decoding="async" />
       <div class="prose">
         <p class="eyebrow">The teacher</p>
         <h2>Ma Shakti Devpriya</h2>
-        <p>Ma Shakti Devpriya teaches in the Sri Vidya Krama tradition and is a co-founder of The Shakti Multiversity. Her areas of teaching include Swara Yoga, Tantra and traditional symbolism. As the tradition requires, the practices of Swara Yoga are given by her directly, in guided courses.</p>
+        <p>Ma Shakti Devpriya teaches in the Sri Vidya Krama tradition and is a co-founder of The Shakti Multiversity. Swara Yoga is central to her teaching, together with the five elements, traditional symbolism and mandalas. As the tradition requires, the practices of Swara Yoga are given by her directly, in guided courses.</p>
         <div class="btn-row">
-          <a class="btn btn-ghost" href={u('/about')}>About Ma</a>
+          <a class="btn btn-ghost" href={u('/ma')}>About Ma</a>
           <a class="btn btn-ghost" href={u('/lineage')}>The lineage</a>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- 7 · Weekly sessions (from the Google Sheet) -->
+  <section class="section alt">
+    <div class="container">
+      <div class="head-row">
+        <div>
+          <p class="eyebrow">Calendar</p>
+          <h2>Weekly sessions</h2>
+        </div>
+        <a class="btn btn-ghost btn-sm" href={u('/calendar')}>Full calendar</a>
+      </div>
+      <Sessions limit={3}>
+        <p class="muted">Dates for weekly sessions with Ma will be listed here. Follow on Instagram or YouTube to hear first.</p>
+      </Sessions>
+    </div>
+  </section>
+
+  <!-- 8 · Student experiences (appears once real accounts are added in src/data/site.ts) -->
+  {experiences.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <p class="eyebrow">In their words</p>
+        <h2>Student experiences</h2>
+        <ul class="voices">
+          {experiences.map((e) => (
+            <li>
+              <blockquote><p>“{e.quote}”</p></blockquote>
+              <p class="who">{e.name}{e.place && <span>, {e.place}</span>}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <!-- 9 · Resources -->
+  <section class="section">
+    <div class="container res">
+      <div class="prose">
+        <p class="eyebrow">Resources</p>
+        <h2>For study</h2>
+        <p>A book by Ma Shakti Devpriya is on its way. Until then, the complete Shiva Swarodaya series and the daily Swara tracker from the free course are the best companions to the teaching.</p>
+        <a class="btn btn-ghost" href={u('/resources')}>See resources</a>
+      </div>
+      <div class="book" aria-hidden="true"><span lang="sa">ग्रन्थ</span><em>Book · coming soon</em></div>
+    </div>
+  </section>
+
+  <!-- 10 · FAQ -->
+  <section class="section alt">
+    <div class="container prose">
+      <p class="eyebrow">Questions</p>
+      <h2>Frequently asked</h2>
+      <div class="faq">
+        {faqs.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+      <p class="more">Questions about a course are answered on each <a href={u('/courses')}>course page</a>. For anything else, <a href={u('/contact')}>write to us</a>.</p>
+    </div>
+  </section>
+
+  <!-- 11 · Follow -->
+  <section class="section band follow">
+    <div class="container follow-row">
+      <div>
+        <p class="eyebrow">Stay in touch</p>
+        <h2>Follow the teaching</h2>
+        <p>New videos, session dates and the annual retreat are announced on Instagram and YouTube.{contactEmail && <> Or write to <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.</>}</p>
+      </div>
+      <SocialLinks showLabels tone="dark" />
+    </div>
+  </section>
 </Base>
 
 <style>
-  .leaf-band .meaning { font: 400 clamp(18px, 1.8vw, 20px)/1.6 var(--font-display); color: var(--ink); margin: 0 0 8px; }
-  .leaf-band .cite { font: 400 13px/1.5 var(--font-ui); color: var(--muted); margin: 0; }
+  .tagline { font: 400 clamp(20px, 2.2vw, 26px)/1.3 var(--font-display); color: var(--gold-text); margin: -6px 0 18px; }
   .intro-grid { display: grid; grid-template-columns: 1fr auto; gap: clamp(32px, 6vw, 96px); align-items: center; }
   .nadi { width: clamp(90px, 12vw, 140px); height: auto; }
   @media (max-width: 720px) { .intro-grid { grid-template-columns: 1fr; } .nadi { display: none; } }
+
+  .scripture .meaning { font: 400 clamp(18px, 1.8vw, 20px)/1.6 var(--font-display); color: var(--ink); margin: 0; }
+  .watch { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 18px 40px; max-width: 920px; margin: clamp(36px, 5vw, 56px) auto 0; padding-top: clamp(28px, 4vw, 40px); border-top: 1px solid var(--rule); }
+  .watch h2 { margin-bottom: 8px; }
+  .watch p:last-child { margin: 0; color: var(--muted); max-width: 52ch; }
 
   .path { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; }
   .path li { background: var(--stone-2); padding: 24px 24px; }
@@ -120,14 +257,54 @@ const path = [
   @media (max-width: 860px) { .path { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 520px) { .path { grid-template-columns: 1fr; } .path li { padding: 22px 20px; } }
 
-  .course { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
-  .meta { font: 500 13px/1 var(--font-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--gold-text); margin-bottom: 20px; }
-  .next { border-left: 1px solid var(--gold-soft); padding-left: 28px; }
-  .next p { color: var(--muted); }
-  .next a { font: 500 15px var(--font-ui); text-decoration: none; }
-  @media (max-width: 760px) { .course { grid-template-columns: 1fr; } .next { border-left: 0; border-top: 1px solid var(--gold-soft); padding: 28px 0 0; } }
+  .course { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+  .includes { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .includes li { background: var(--stone); border: 1px solid var(--rule); border-radius: 12px; padding: 14px 16px; }
+  .includes strong { display: block; font: 400 19px/1.25 var(--font-display); color: var(--kumkum); }
+  .includes span { font: 400 14px/1.4 var(--font-ui); color: var(--muted); }
+  @media (max-width: 860px) { .course { grid-template-columns: 1fr; } }
+  @media (max-width: 420px) { .includes { grid-template-columns: 1fr; } }
+
+  .journey { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .journey a { position: relative; display: flex; flex-direction: column; gap: 8px; height: 100%; padding: 26px 24px 22px; border: 1px solid var(--rule); border-radius: 14px; background: var(--maroon-2); text-decoration: none; color: var(--ink); overflow: hidden; transition: border-color .2s, transform .2s; }
+  .journey a:hover { border-color: var(--gold-line); transform: translateY(-2px); }
+  .journey a::after { content: attr(data-dev); position: absolute; right: 16px; bottom: 10px; font: 400 56px/1 var(--font-sanskrit); color: rgba(226, 198, 142, .14); pointer-events: none; }
+  .j-tag { font: 500 11px/1 var(--font-ui); letter-spacing: .14em; text-transform: uppercase; color: var(--gold-text); }
+  .j-title { font: 400 clamp(22px, 2.4vw, 26px)/1.2 var(--font-display); }
+  .j-text { color: var(--muted); font-size: 16px; }
+  .j-more { margin-top: auto; padding-top: 8px; font: 500 15px/1 var(--font-ui); color: var(--gold-light); }
+  @media (max-width: 860px) { .journey { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { .journey a:hover { transform: none; } }
 
   .teacher { display: grid; grid-template-columns: 280px 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
   .teacher img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; border-radius: 999px 999px 14px 14px; }
   @media (max-width: 640px) { .teacher { grid-template-columns: 1fr; } .teacher img { width: min(240px, 70%); } }
+
+  .head-row { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; margin-bottom: 22px; }
+  .head-row h2 { margin: 0; }
+  .muted { color: var(--muted); margin: 0; }
+
+  .voices { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+  .voices li { border: 1px solid var(--rule); border-radius: 14px; padding: 22px 24px; background: var(--stone-2); }
+  .voices blockquote { margin: 0 0 12px; font: 400 18px/1.6 var(--font-display); }
+  .voices blockquote p { margin: 0; }
+  .who { margin: 0; font: 500 14px/1.4 var(--font-ui); color: var(--gold-text); }
+  .who span { color: var(--muted); font-weight: 400; }
+
+  .res { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+  .book { position: relative; display: grid; place-items: center; align-content: center; gap: 8px; aspect-ratio: 4 / 3; max-width: 360px; width: 100%; justify-self: end; border-radius: 14px; overflow: hidden; background: radial-gradient(ellipse at 50% 120%, #6A1A1E 0%, #3B0A0E 60%, #1C0507 100%); }
+  .book::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: linear-gradient(90deg, #9D7636, #F2D9A0, #9D7636); }
+  .book span { font: 400 44px/1 var(--font-sanskrit); color: var(--gold-light); }
+  .book em { font: 500 11px/1 var(--font-ui); font-style: normal; letter-spacing: .16em; text-transform: uppercase; color: #E6D3AE; }
+  @media (max-width: 720px) { .res { grid-template-columns: 1fr; } .book { justify-self: start; max-width: 280px; } }
+
+  .faq details { border-bottom: 1px solid var(--rule); padding: 4px 0; }
+  .faq summary { cursor: pointer; padding: 14px 0; font: 400 19px/1.35 var(--font-display); color: var(--ink); }
+  .faq summary:focus-visible { outline: 2px solid var(--gold-text); outline-offset: 3px; border-radius: 4px; }
+  .faq details p { margin: 0 0 16px; color: var(--muted); }
+  .more { margin-top: 20px; font-size: 16px; color: var(--muted); }
+
+  .follow-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px 40px; }
+  .follow-row h2 { margin-bottom: 8px; }
+  .follow-row p:last-child { margin: 0; color: var(--muted); max-width: 56ch; }
 </style>

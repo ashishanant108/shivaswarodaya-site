@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import CourseDetail from '../../components/CourseDetail.astro';
+import { u } from '../../lib/url';
+
+const faqs = [
+  { q: 'When and where is the retreat?', a: `Once a year. Dates and place are announced on the <a href="${u('/calendar')}">Calendar</a> and to everyone who has registered for a course.` },
+  { q: 'Do I need to have done a course first?', a: 'Taking Meet your Swara first is recommended, so that you arrive already familiar with observing your Swara. Requirements for each retreat will be given with the dates.' },
+  { q: 'What is a day like?', a: 'A daily rhythm of practice, study and quiet, with time with Ma for teaching and questions. The programme is shared before each retreat.' },
+  { q: 'What does it cost?', a: 'The contribution, including stay and food, will be shared with the dates.' },
+  { q: 'Is it suitable if I have a health condition?', a: 'Please tell us about any health condition when you apply. The practices are gentle, but some days are long, and we want everyone to take part safely.' },
+];
+---
+<Base title="Annual retreat" description="The annual Swara Yoga retreat with Ma Shakti Devpriya: days of practice, study and quiet." ogImage="/og/courses.jpg">
+  <CourseDetail
+    sanskrit="एकान्त"
+    eyebrow="In person · once a year"
+    title="Annual retreat"
+    lede="Once a year, a few days set apart for practice, study and quiet with Ma Shakti Devpriya."
+    facts={[['Format', 'In person, residential'], ['How often', 'Once a year'], ['Teacher', 'Ma Shakti Devpriya'], ['Dates and place', 'To be announced']]}
+    sections={[
+      { title: 'Days set apart', paras: [
+        'Daily life rarely leaves room to watch the breath for long. The retreat does: a few days away from ordinary routine, with a simple rhythm of practice, study of the Shiva Swarodaya and time in silence.',
+        'Being with the teacher for several days also allows what is hard to give in a course: guidance that responds to each person’s practice as it unfolds.',
+      ] },
+    ]}
+    draft="Draft for Ma: please confirm the usual month, place, length, who may attend and how to apply."
+    faqs={faqs}
+    ctaText="Tell me about the next retreat"
+    ctaTopic="Annual retreat"
+  />
+</Base>

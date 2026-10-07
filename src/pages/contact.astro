@@ -3,7 +3,7 @@ import { u } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import PageIntro from '../components/PageIntro.astro';
 import SocialLinks from '../components/SocialLinks.astro';
-import { contactEmail } from '../data/site';
+import { contactEmail, formEndpoint } from '../data/site';
 ---
 <Base title="Contact" description="Write to Shiva Swarodaya with questions about Swara Yoga and the courses with Ma Shakti Devpriya." ogImage="/og/default.jpg">
   <PageIntro
@@ -13,9 +13,11 @@ import { contactEmail } from '../data/site';
     lede="For questions about the courses or the teaching, write to us. We usually reply within a few days."
   />
 
-  <section class="section" style="padding-top: 8px">
+  <section class="section">
     <div class="container layout">
-      <form class="form" id="contact-form" novalidate>
+      <form class="form" id="contact-form" data-endpoint={formEndpoint} novalidate>
+        <input type="hidden" name="form" value="contact" />
+        <div class="hp" aria-hidden="true"><label>Leave this empty <input name="website" tabindex="-1" autocomplete="off" /></label></div>
         <div class="field">
           <label for="c-name">Your name</label>
           <input id="c-name" name="name" type="text" autocomplete="name" required />
@@ -28,7 +30,10 @@ import { contactEmail } from '../data/site';
           <label for="c-topic">About</label>
           <select id="c-topic" name="topic">
             <option>Meet your Swara (free course)</option>
-            <option>Swara Yoga Sadhana (foundation course)</option>
+            <option>Foundation course (online)</option>
+            <option>Sadhana & Practice (in person)</option>
+            <option>Annual retreat</option>
+            <option>Weekly sessions</option>
             <option>The teaching and lineage</option>
             <option>Something else</option>
           </select>
@@ -37,7 +42,7 @@ import { contactEmail } from '../data/site';
           <label for="c-msg">Your message</label>
           <textarea id="c-msg" name="message" rows="6" required></textarea>
         </div>
-        <p class="small">By sending this form you agree to our <a href={u('/privacy')}>privacy policy</a>. We use your details only to reply to you.</p>
+        <p class="small">We use your details only to reply to you. See our <a href={u('/privacy')}>privacy policy</a>.</p>
         <button type="submit" class="btn btn-primary">Send message</button>
         <p id="c-status" class="status" role="status" aria-live="polite"></p>
       </form>
@@ -64,18 +69,28 @@ import { contactEmail } from '../data/site';
 </Base>
 
 <script>
-  // Placeholder until a form service is connected (Tracker A-12).
+  // Pre-select the topic when arriving from a course page (?topic=...).
+  const want = new URLSearchParams(location.search).get('topic');
+  const sel = document.getElementById('c-topic') as HTMLSelectElement | null;
+  if (want && sel) { const o = Array.from(sel.options).find((x) => x.text === want); if (o) sel.value = o.value; }
+
+  // Sends the message to the Google Sheet (formEndpoint in src/data/site.ts), which emails a notification.
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   const status = document.getElementById('c-status');
-  form?.addEventListener('submit', (e) => {
+  const say = (t: string) => { if (status) status.textContent = t; };
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const firstInvalid = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]')).find((el) => !el.value.trim() || !el.checkValidity());
-    if (firstInvalid) {
-      if (status) status.textContent = 'Please fill in your name, a valid email address and your message.';
-      firstInvalid.focus();
-      return;
-    }
-    if (status) status.textContent = 'Thank you. (Preview only: the form is not connected yet.)';
+    if (firstInvalid) { say('Please fill in your name, a valid email address and your message.'); firstInvalid.focus(); return; }
+    const url = form.dataset.endpoint;
+    if (!url) { say('Thank you. (Preview only: the form is not connected yet.)'); return; }
+    const button = form.querySelector('button'); if (button) button.disabled = true;
+    say('Sending…');
+    try {
+      await fetch(url, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(new FormData(form) as any) });
+      form.reset(); say('Thank you. Your message has been sent, and we will reply by email.');
+    } catch { say('Sorry, that did not go through. Please try again, or write to us by email.'); }
+    finally { if (button) button.disabled = false; }
   });
 </script>
 
@@ -88,6 +103,7 @@ import { contactEmail } from '../data/site';
   .field textarea { resize: vertical; }
   .field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: 2px solid var(--gold-text); outline-offset: 2px; }
   .form .btn { justify-self: start; border: 0; cursor: pointer; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .small { margin: 0; font: 400 14px/1.5 var(--font-ui); color: var(--muted); }
   .status { margin: 0; min-height: 1.4em; font: 400 14px/1.4 var(--font-ui); color: var(--kumkum); }
   .side { display: grid; gap: 16px; }

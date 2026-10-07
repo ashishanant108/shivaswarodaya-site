@@ -1,0 +1,97 @@
+---
+/**
+ * Shared layout for course pages after "Meet your Swara":
+ * intro, key facts, sections, a draft note for Ma, FAQ and a call to action.
+ */
+import { u } from '../lib/url';
+import PageIntro from './PageIntro.astro';
+
+interface Section { title: string; paras: string[] }
+interface Props {
+  sanskrit: string;
+  eyebrow: string;
+  title: string;
+  lede: string;
+  facts: [string, string][];
+  sections: Section[];
+  draft?: string;
+  faqs: { q: string; a: string }[];
+  ctaText: string;
+  ctaTopic: string;     // pre-selects the topic on the Contact form
+  ctaNote?: string;
+}
+const { sanskrit, eyebrow, title, lede, facts, sections, draft, faqs, ctaText, ctaTopic, ctaNote } = Astro.props;
+const contactHref = `${u('/contact')}?topic=${encodeURIComponent(ctaTopic)}#contact-form`;
+---
+<PageIntro sanskrit={sanskrit} eyebrow={eyebrow} title={title} lede={lede} />
+
+<article class="article">
+  <section class="section">
+    <div class="container cd-intro">
+      <div class="prose">
+        {sections.map((s) => (
+          <>
+            <h2>{s.title}</h2>
+            {s.paras.map((p) => <p set:html={p} />)}
+          </>
+        ))}
+        {draft && <p class="draft-note" style="margin-top: 20px">{draft}</p>}
+      </div>
+      <aside class="cd-side">
+        <dl class="facts">
+          {facts.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
+        </dl>
+        <a class="btn btn-primary" href={contactHref}>{ctaText}</a>
+        {ctaNote && <p class="cd-note">{ctaNote}</p>}
+      </aside>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container prose">
+      <h2>Questions</h2>
+      <div class="faq">
+        {faqs.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p set:html={f.a} />
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container prose">
+      <p class="cd-guru">Swara Yoga is a tantric discipline. Its practices are received from a qualified teacher, step by step. The courses are taught by Ma Shakti Devpriya in the tradition described on the <a href={u('/lineage')}>Lineage</a> page.</p>
+      <div class="btn-row">
+        <a class="btn btn-ghost" href={u('/courses')}>All courses</a>
+        <a class="btn btn-ghost" href={u('/courses/meet-your-swara')}>Begin with Meet your Swara</a>
+      </div>
+    </div>
+  </section>
+</article>
+
+<style>
+  .cd-intro { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
+  .cd-intro h2:not(:first-child) { margin-top: 1.4em; }
+  .cd-side { position: sticky; top: calc(var(--header-h) + 20px); display: grid; gap: 18px; }
+  .facts { margin: 0; border: 1px solid var(--rule); border-radius: 12px; background: var(--stone-2); padding: 8px 22px; }
+  .facts div { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+  .facts div:last-child { border-bottom: 0; }
+  .facts dt { font: 400 14px/1.4 var(--font-ui); color: var(--muted); }
+  .facts dd { margin: 0; font: 500 15px/1.4 var(--font-ui); color: var(--ink); text-align: right; }
+  .cd-side .btn { justify-self: stretch; }
+  .cd-note { margin: 0; font: 400 14px/1.5 var(--font-ui); color: var(--muted); }
+  .cd-guru { border-left: 2px solid var(--gold); padding-left: 16px; }
+
+  .faq details { border-bottom: 1px solid var(--rule); padding: 4px 0; }
+  .faq summary { cursor: pointer; padding: 14px 0; font: 400 19px/1.35 var(--font-display); color: var(--ink); }
+  .faq summary:focus-visible { outline: 2px solid var(--gold-text); outline-offset: 3px; border-radius: 4px; }
+  .faq details p { margin: 0 0 16px; color: var(--muted); }
+
+  @media (max-width: 860px) {
+    .cd-intro { grid-template-columns: 1fr; }
+    .cd-side { position: static; }
+  }
+</style>

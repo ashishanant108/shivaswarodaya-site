@@ -17,7 +17,7 @@ import PalmLeaf from '../components/PalmLeaf.astro';
     lede="The tantric scripture in which Shiva reveals to Parvati the knowledge of Swara, the flow of breath through which Prana moves. It is the foundation of Swara Yoga."
   />
 
-  <section class="section leaf-section" style="padding-top: 8px">
+  <section class="section leaf-section">
     <div class="container">
       <PalmLeaf
         lines={['स्वरज्ञानात्परं गुह्यं स्वरज्ञानात्परं धनम् ।', 'स्वरज्ञानात्परं ज्ञानं न वा दृष्टं न वा श्रुतम् ॥']}
@@ -132,7 +132,7 @@ import PalmLeaf from '../components/PalmLeaf.astro';
           <li>No medical claims, and no shortcuts.</li>
           <li>Practices are learned from the teacher, not from the page.</li>
         </ul>
-        <p>You can begin with the free seven-day course, <em>Meet your Swara</em>, and continue with the foundation course when you are ready.</p>
+        <p>You can begin with the free eight-day course, <em>Meet your Swara</em>, and continue your journey when you are ready.</p>
         <div class="btn-row">
           <a class="btn btn-primary" href={u('/courses/meet-your-swara')}>Begin “Meet your Swara”</a>
           <a class="btn btn-ghost" href={u('/lineage')}>The lineage</a>
@@ -140,15 +140,14 @@ import PalmLeaf from '../components/PalmLeaf.astro';
       </div>
     </section>
 
-    <section class="section" id="ma">
-      <div class="container ma">
-        <img src={u('/images/ma-portrait.webp')} srcset={`${u('/images/ma-portrait-300.webp')} 300w, ${u('/images/ma-portrait.webp')} 520w`} sizes="(max-width: 640px) 220px, 260px" alt="Ma Shakti Devpriya" width="520" height="605" loading="lazy" decoding="async" />
-        <div class="prose">
-          <p class="eyebrow">The teacher</p>
-          <h2>Ma Shakti Devpriya</h2>
-          <p>Ma Shakti Devpriya, known to her students as Ma Shakti or Guruma, is a co-founder of The Shakti Multiversity with her consort Acharya Agyaatadarshan Anand Nath. She is <em>poornabhishiktaa</em> in the Sri Vidya Kaula Krama tradition and has been immersed in Tantra since 2006. She began teaching publicly in late 2012, with the permission of her Gurudev, Shri Shivanand Nath ji.</p>
-          <p>Swara Yoga is central to her teaching, together with the Panchamahabhutas, traditional symbolism (Prachya Prateek Vigyaan) and mandalas. She is the author of <em>Tattva Shakti Vigyaan: Tantra for Modern Man</em>. Her students include yoga teachers, doctors, business leaders and homemakers.</p>
-          <p><a href={u('/lineage')}>Read about the lineage →</a></p>
+    <section class="section band" id="ma">
+      <div class="container prose">
+        <p class="eyebrow">The teacher</p>
+        <h2>Ma Shakti Devpriya</h2>
+        <p>The teaching on this site is given by Ma Shakti Devpriya, who teaches Swara Yoga in the Sri Vidya Krama tradition.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href={u('/ma')}>About Ma</a>
+          <a class="btn btn-ghost" href={u('/lineage')}>The lineage</a>
         </div>
       </div>
     </section>
@@ -164,7 +163,4 @@ import PalmLeaf from '../components/PalmLeaf.astro';
   .leaf-section .cite { font: 400 13px/1.5 var(--font-ui); color: var(--muted); margin: 0; }
   .verse .dev { font: 400 clamp(19px, 2vw, 22px)/1.7 var(--font-sanskrit); font-style: normal; color: var(--kumkum); margin-bottom: 12px; }
   .verse .en { font-style: italic; }
-  .ma { display: grid; grid-template-columns: 260px 1fr; gap: clamp(28px, 5vw, 56px); align-items: center; }
-  .ma img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; border-radius: 999px 999px 14px 14px; }
-  @media (max-width: 640px) { .ma { grid-template-columns: 1fr; } .ma img { width: min(220px, 64%); } }
 </style>

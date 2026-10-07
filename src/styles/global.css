@@ -5,8 +5,8 @@
 :root {
   --stone: #F6F0E4;        /* sandalwood ivory: page background */
   --stone-2: #EEE5D5;      /* alternate section background */
-  --kumkum: #6E1414;       /* accent: buttons, links, small details */
-  --kumkum-dark: #5A0F0F;
+  --kumkum: #5C0F14;       /* dark maroon: buttons, links, small details */
+  --kumkum-dark: #440A0E;
   --gold: #B08D57;         /* flat gold: rules and decoration only */
   --gold-text: #7A5B2B;    /* gold for small text (eyebrows, Sanskrit) */
   --gold-line: #9C7A45;    /* outlines of buttons and controls (3.5:1) */
@@ -15,7 +15,9 @@
   --ink: #2B1D1A;
   --muted: #6A5A52;
   --rule: #E2D7C3;
-  --charcoal: #1A1412;     /* footer, echoes the black hero */
+  --charcoal: #2A0709;     /* footer: deepest maroon */
+  --maroon: #3B0A0E;       /* header and feature bands */
+  --maroon-2: #4A1015;     /* cards inside a band */
   --night: #000000;
 
   /* diagram colours */
@@ -122,3 +124,27 @@ body.no-scroll { overflow: hidden; }
 /* Single-column text sits on the same left edge as wider layouts */
 .container.prose { max-width: var(--max); }
 .container.prose > * { max-width: var(--measure); }
+
+/* ---------- Maroon bands (theme A) ----------
+   Add class="band" to a header, page intro or section. Inside a band the
+   colour tokens switch to ivory text and gold accents on dark maroon, so
+   every component inside keeps working without its own dark styles.
+   Contrast on #3B0A0E: ink 14.6 · muted 10.1 · gold 9.6 (AAA). */
+.band {
+  --stone: var(--maroon);
+  --stone-2: var(--maroon-2);
+  --ink: #F4E9D8;
+  --muted: #DCC8AE;
+  --rule: #6A2A2C;
+  --kumkum: #F0D9A8;
+  --kumkum-dark: #E2C68E;
+  --gold-text: #E2C68E;
+  --gold-line: #C9A86E;
+  --gold-soft: #8A6A45;
+  background: var(--maroon);
+  color: var(--ink);
+}
+.band .btn-primary { background: var(--gold-light); color: var(--maroon); }
+.band .btn-primary:hover { background: #F0D9A8; }
+.band .btn-ghost:hover { background: var(--maroon-2); }
+.band a:focus-visible, .band button:focus-visible { outline-color: var(--gold-light); }

@@ -1,0 +1,34 @@
+---
+import Base from '../../layouts/Base.astro';
+import CourseDetail from '../../components/CourseDetail.astro';
+
+const faqs = [
+  { q: 'Who can join?', a: 'Students who have completed the foundation course and keep a regular practice. This is a practitioner level, taught in person.' },
+  { q: 'Where does it take place?', a: 'In person, with Ma Shakti Devpriya. The place and dates are shared with students before each programme.' },
+  { q: 'How is it different from the foundation course?', a: 'The foundation course gives the understanding and the first practices. Here the emphasis is on sadhana itself: practice that is guided and corrected directly by the teacher.' },
+  { q: 'Is there a fee?', a: 'Details of contribution, stay and food will be shared with the programme dates.' },
+  { q: 'Can I join without the foundation course?', a: 'Please write to us and describe your practice so far. Ma decides on each request.' },
+];
+---
+<Base title="Sadhana & Practice" description="Sadhana & Practice: the practitioner level of Swara Yoga, taught in person by Ma Shakti Devpriya." ogImage="/og/courses.jpg">
+  <CourseDetail
+    sanskrit="साधना"
+    eyebrow="In person · practitioner level"
+    title="Sadhana & Practice"
+    lede="For practitioners who wish to deepen their practice of Swara Yoga under the direct guidance of Ma Shakti Devpriya."
+    facts={[['Format', 'In person (offline)'], ['Level', 'Practitioner'], ['Before joining', 'Foundation course'], ['Teacher', 'Ma Shakti Devpriya'], ['Dates', 'To be announced']]}
+    sections={[
+      { title: 'A practice received from the teacher', paras: [
+        'In the tradition, the deeper practices of Swara Yoga are not learned from books or recordings. They are given by the teacher, in person, when the student is ready, and then watched over as the practice matures.',
+        'Sadhana & Practice is that stage. It brings practitioners together with Ma for guided sadhana, questions and correction, building on what was learned in the foundation course.',
+      ] },
+      { title: 'Who it is for', paras: [
+        'Students who have completed the foundation course and keep a steady daily practice, and who are ready to commit to sadhana over time.',
+      ] },
+    ]}
+    draft="Draft for Ma: please confirm where and how often this is held, the length of each programme, eligibility, and how students apply."
+    faqs={faqs}
+    ctaText="Ask about joining"
+    ctaTopic="Sadhana & Practice (in person)"
+  />
+</Base>

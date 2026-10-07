@@ -6,6 +6,7 @@ const path = stripBase(Astro.url.pathname);
 
 const links = [
   { href: '/about', label: 'About' },
+  { href: '/ma', label: 'Ma' },
   { href: '/lineage', label: 'Lineage' },
   { href: '/courses', label: 'Courses' },
   { href: '/videos', label: 'Videos' },
@@ -14,7 +15,7 @@ const links = [
 ];
 const isActive = (href: string) => path === href || path.startsWith(href + '/');
 ---
-<header class:list={['site-header', { 'over-hero': overHero, solid: !overHero }]} id="site-header">
+<header class:list={['site-header', 'band', { 'over-hero': overHero, solid: !overHero }]} id="site-header">
   <div class="bar container">
     <a href={u('/')} class="brand" aria-label="Shiva Swarodaya home">
       <img src={u('/images/logo-160.webp')} alt="" width="40" height="40" />
@@ -69,15 +70,15 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
 </script>
 
 <style>
-  .site-header { position: sticky; top: 0; z-index: 50; background: var(--stone); border-bottom: 1px solid var(--rule); }
+  .site-header { position: sticky; top: 0; z-index: 50; background: var(--maroon); border-bottom: 1px solid #7A4B2A; }
   .site-header.over-hero { position: fixed; inset: 0 0 auto 0; background: transparent; border-bottom-color: transparent; transition: background-color .4s ease, border-color .4s ease; }
-  .site-header.over-hero.scrolled { background: var(--stone); border-bottom-color: var(--rule); }
+  .site-header.over-hero.scrolled { background: var(--maroon); border-bottom-color: #7A4B2A; }
 
   .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: var(--header-h); padding-top: env(safe-area-inset-top, 0px); }
 
   .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; transition: opacity .5s ease, transform .5s ease; }
   .brand img { width: 40px; height: 40px; }
-  .brand span { font: 400 19px/1 var(--font-display); color: var(--kumkum); white-space: nowrap; }
+  .brand span { font: 400 19px/1 var(--font-display); color: var(--gold-light); white-space: nowrap; }
   .over-hero:not(.scrolled) .brand { opacity: 0; transform: translateY(-6px); pointer-events: none; }
 
   .nav { display: flex; align-items: center; gap: 28px; }

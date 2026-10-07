@@ -8,41 +8,63 @@ const courses = [
     href: '/courses/meet-your-swara',
     dev: 'स्वर',
     tone: 'kumkum',
-    eyebrow: 'Free course',
+    eyebrow: 'Free · online',
     title: 'Meet your Swara',
-    text: 'Seven short lessons to begin observing your own breath the way the Shiva Swarodaya describes. No experience needed.',
-    facts: [['Length', '7 days'], ['Each day', 'About 15 minutes'], ['Format', 'Pre-recorded video, by email'], ['Cost', 'Free']],
+    text: 'Eight short lessons to begin observing your own breath the way the Shiva Swarodaya describes. Beginner friendly.',
+    facts: [['Length', '8 days'], ['Each day', 'About 10 minutes'], ['Includes', 'Daily tracker, guided meditation'], ['Cost', 'Free']],
     cta: 'Begin the free course',
     primary: true,
   },
   {
-    href: '/courses/swara-yoga-sadhana',
+    href: '/courses/foundation',
+    dev: 'आधार',
+    tone: 'maroon',
+    eyebrow: 'Online',
+    title: 'Foundation course',
+    text: 'A structured course in the study and practice of Swara Yoga, taught in stages, for those ready to practise regularly.',
+    facts: [['Format', 'Online'], ['Level', 'After Meet your Swara'], ['Next batch', 'To be announced']],
+    cta: 'About the foundation course',
+    primary: false,
+  },
+  {
+    href: '/courses/sadhana-practice',
     dev: 'साधना',
     tone: 'night',
-    eyebrow: 'Foundation course',
-    title: 'Swara Yoga Sadhana',
-    text: 'A structured course in the study and practice of Swara Yoga, taught in stages by Ma Shakti Devpriya, for those ready to practise systematically.',
-    facts: [['Format', 'Pre-recorded, in stages'], ['Guidance', 'From Ma Shakti Devpriya'], ['Enrolment', 'Details coming soon']],
-    cta: 'About the foundation course',
+    eyebrow: 'In person',
+    title: 'Sadhana & Practice',
+    text: 'The practitioner level: sadhana guided directly by Ma Shakti Devpriya, building on the foundation course.',
+    facts: [['Format', 'In person (offline)'], ['Level', 'Practitioner'], ['Dates', 'To be announced']],
+    cta: 'About Sadhana & Practice',
+    primary: false,
+  },
+  {
+    href: '/courses/retreat',
+    dev: 'एकान्त',
+    tone: 'earth',
+    eyebrow: 'Once a year',
+    title: 'Annual retreat',
+    text: 'A few days set apart for practice, study and quiet with Ma Shakti Devpriya.',
+    facts: [['Format', 'In person, residential'], ['How often', 'Once a year'], ['Dates', 'To be announced']],
+    cta: 'About the retreat',
     primary: false,
   },
 ];
 
 const steps = [
   { n: 'I', title: 'Meet your Swara', text: 'Learn to notice the flow of breath and what the tradition says about it.' },
-  { n: 'II', title: 'Swara Yoga Sadhana', text: 'Study the teaching of the Shiva Swarodaya and begin guided practice.' },
-  { n: 'III', title: 'Guidance from the Guru', text: 'Deeper practices are received directly from the teacher, when the student is ready.' },
+  { n: 'II', title: 'Foundation course', text: 'Study the teaching of the Shiva Swarodaya and begin guided practice.' },
+  { n: 'III', title: 'Sadhana & Practice', text: 'Practice received and guided directly by the teacher, in person, when the student is ready.' },
 ];
 ---
-<Base title="Courses" description="Courses in Swara Yoga with Ma Shakti Devpriya: the free seven-day course Meet your Swara, and the foundation course Swara Yoga Sadhana." ogImage="/og/courses.jpg">
+<Base title="Courses" description="Courses in Swara Yoga with Ma Shakti Devpriya: the free eight-day course Meet your Swara, the online foundation course, Sadhana & Practice in person, and the annual retreat." ogImage="/og/courses.jpg">
   <PageIntro
     sanskrit="शिक्षा"
     eyebrow="Learn"
     title="Courses"
-    lede="Swara Yoga is learned step by step, under a teacher's guidance. Begin with the free seven-day course, then continue with the foundation course."
+    lede="Swara Yoga is learned step by step, under a teacher's guidance. Begin with the free eight-day course, then continue your journey."
   />
 
-  <section class="section" style="padding-top: 8px">
+  <section class="section">
     <div class="container">
       <ul class="cards">
         {courses.map((c) => (
@@ -66,7 +88,7 @@ const steps = [
     </div>
   </section>
 
-  <section class="section alt">
+  <section class="section band">
     <div class="container">
       <p class="eyebrow">How the study unfolds</p>
       <h2>One path, in stages</h2>
@@ -79,7 +101,7 @@ const steps = [
           </li>
         ))}
       </ol>
-      <p class="note">Swara Yoga is a tantric discipline. Its practices are received from a qualified teacher, not learned by self-study. The courses are taught by Ma Shakti Devpriya in the tradition described on the <a href={u('/lineage')}>Lineage</a> page.</p>
+      <p class="note">Alongside these stages, the <a href={u('/courses/retreat')}>annual retreat</a> offers a few days of practice with Ma each year. Swara Yoga is a tantric discipline. Its practices are received from a qualified teacher, not learned by self-study. The courses are taught by Ma Shakti Devpriya in the tradition described on the <a href={u('/lineage')}>Lineage</a> page.</p>
     </div>
   </section>
 </Base>
@@ -90,6 +112,8 @@ const steps = [
   .cover { position: relative; display: grid; place-items: center; aspect-ratio: 16 / 7; text-decoration: none; overflow: hidden; }
   .cover.kumkum { background: radial-gradient(ellipse at 50% 120%, #8E1B1B 0%, #5A0F0F 55%, #2B0707 100%); }
   .cover.night { background: radial-gradient(ellipse at 50% 120%, #3A2A1E 0%, #1A1412 55%, #000 100%); }
+  .cover.maroon { background: radial-gradient(ellipse at 50% 120%, #6A1A1E 0%, #3B0A0E 55%, #1C0507 100%); }
+  .cover.earth { background: radial-gradient(ellipse at 50% 120%, #6B4A22 0%, #3A2410 55%, #1A0F06 100%); }
   .cover::before, .cover::after { content: ''; position: absolute; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #9D7636, #F2D9A0, #9D7636); }
   .cover::before { top: 0; } .cover::after { bottom: 0; }
   .cover-dev { font: 400 clamp(52px, 7vw, 84px)/1 var(--font-sanskrit); color: var(--gold-light); text-shadow: 0 2px 18px rgba(0, 0, 0, .35); }

@@ -2,54 +2,58 @@
 import { u } from '../../lib/url';
 import Base from '../../layouts/Base.astro';
 import PageIntro from '../../components/PageIntro.astro';
+import { formEndpoint } from '../../data/site';
 
 // Draft outline for Ma's review. Each day: one short video + one simple observation.
 const days = [
   { n: 1, title: 'The breath you already have', text: 'Sit comfortably and watch the breath without changing it. Before anything else, we learn simply to notice.', practice: 'Five minutes of quiet observation, morning and evening.' },
   { n: 2, title: 'Which side is flowing?', text: 'Most of the time one nostril flows more freely than the other. Learn two gentle ways to tell which one it is.', practice: 'Check your flow three times during the day.' },
   { n: 3, title: 'Ida and Pingala', text: 'The lunar and the solar flow, and what the Shiva Swarodaya says about each.', practice: 'Note how you feel when each side is flowing.' },
-  { n: 4, title: 'The rhythm of your day', text: 'The text describes the flow changing about every hour. Begin a simple Swara diary and compare it with your own day.', practice: 'Record your flow each hour for one day.' },
+  { n: 4, title: 'The rhythm of your day', text: 'The text describes the flow changing through the day. Begin your daily tracker and compare it with your own day.', practice: 'Record your flow in the tracker through one day.' },
   { n: 5, title: 'When both flow: Sushumna', text: 'The moments when the breath flows evenly through both nostrils, and why the tradition connects them with meditation.', practice: 'Sit quietly when you notice both sides flowing.' },
-  { n: 6, title: 'A first look at the tattvas', text: 'An introduction to the five elements that the text describes within each flow. Understanding only, no technique.', practice: 'Read back through your diary with this in mind.' },
-  { n: 7, title: 'Living with Swara', text: 'Bringing a quiet awareness of the breath into daily life, and how the study continues from here.', practice: 'Choose one moment each day to check your Swara.' },
+  { n: 6, title: 'A first look at the tattvas', text: 'An introduction to the five elements that the text describes within each flow. Understanding only, no technique.', practice: 'Read back through your tracker with this in mind.' },
+  { n: 7, title: 'Swara in daily life', text: 'Bringing a quiet awareness of the breath into ordinary moments: waking, eating, beginning a task.', practice: 'Choose three moments each day to check your Swara.' },
+  { n: 8, title: 'Resting in the breath', text: 'A guided meditation with Ma Shakti Devpriya, and how the study continues from here.', practice: 'The guided meditation, once a day.' },
 ];
 
 const faqs = [
   { q: 'Do I need any experience of yoga?', a: 'No. The course starts from the very beginning. If you already practise yoga or pranayama, you will find that Swara Yoga looks at the breath in a different way.' },
-  { q: 'Is it really free?', a: 'Yes. There is nothing to pay and no card is needed. You only need an email address to receive the daily lessons.' },
-  { q: 'How much time does it take?', a: 'About fifteen minutes a day: a short video and a few minutes of quiet practice.' },
+  { q: 'Is it really free?', a: 'Yes. There is nothing to pay and no card is needed. You register with your name and email address, and the daily lessons arrive by email.' },
+  { q: 'How much time does it take?', a: 'About ten minutes a day: a short video and a few minutes of quiet practice.' },
   { q: 'Are the practices safe?', a: 'The course uses only observation of your natural breath. There is no breath holding and no forceful breathing. If you have a respiratory or other health condition, check with your doctor before starting any new practice.' },
-  { q: 'What happens after the seven days?', a: 'If you would like to study further, the foundation course, Swara Yoga Sadhana, continues the teaching in a structured way. There is no obligation.' },
+  { q: 'What happens after the eight days?', a: 'If you would like to continue, the online foundation course takes the study further in a structured way. There is no obligation.' },
 ];
 ---
 <Base
   ogImage="/og/meet-your-swara.jpg"
-  ogImageAlt="Meet your Swara, a free seven-day course"
-  title="Meet your Swara · free 7-day course"
-  description="A free, pre-recorded seven-day introduction to Swara Yoga with Ma Shakti Devpriya. Learn to observe your own breath as the Shiva Swarodaya describes."
+  ogImageAlt="Meet your Swara, a free eight-day course"
+  title="Meet your Swara · free 8-day course"
+  description="A free, pre-recorded eight-day introduction to Swara Yoga with Ma Shakti Devpriya. Learn to observe your own breath as the Shiva Swarodaya describes."
 >
   <PageIntro
     sanskrit="स्वर"
-    eyebrow="Free course · 7 days · pre-recorded"
+    eyebrow="Free course · 8 days · 10 minutes a day"
     title="Meet your Swara"
-    lede="Seven short lessons with Ma Shakti Devpriya, to begin observing your own breath in the way the Shiva Swarodaya describes."
+    lede="Eight short lessons with Ma Shakti Devpriya, to begin observing your own breath in the way the Shiva Swarodaya describes."
   />
 
   <article class="article">
-    <section class="section" style="padding-top: 8px">
+    <section class="section">
       <div class="container intro">
         <div class="prose">
           <p>At any moment, your breath is flowing a little more through one nostril than the other. Most people never notice. Swara Yoga begins right here, with this simple, very ordinary fact.</p>
-          <p>In seven days you will learn to notice which side is flowing, understand what the tradition says about each flow, and begin to see how this rhythm moves through your own day. Nothing needs to be forced. The course is about attention.</p>
+          <p>In eight days you will learn to notice which side is flowing, understand what the tradition says about each flow, and begin to see how this rhythm moves through your own day. Nothing needs to be forced. The course is about attention.</p>
           <div class="btn-row">
             <a class="btn btn-primary" href="#join">Join the free course</a>
             <a class="btn btn-ghost" href={u('/about')}>What is Swara Yoga?</a>
           </div>
         </div>
         <dl class="facts">
-          <div><dt>Length</dt><dd>7 days</dd></div>
-          <div><dt>Each day</dt><dd>About 15 minutes</dd></div>
-          <div><dt>Format</dt><dd>Pre-recorded video, by email</dd></div>
+          <div><dt>Length</dt><dd>8 days</dd></div>
+          <div><dt>Each day</dt><dd>About 10 minutes</dd></div>
+          <div><dt>Format</dt><dd>Pre-recorded video, a link by email each day</dd></div>
+          <div><dt>Includes</dt><dd>Daily tracker, guided meditation</dd></div>
+          <div><dt>Level</dt><dd>Beginner friendly</dd></div>
           <div><dt>Teacher</dt><dd>Ma Shakti Devpriya</dd></div>
           <div><dt>Cost</dt><dd>Free</dd></div>
         </dl>
@@ -58,7 +62,7 @@ const faqs = [
 
     <section class="section alt">
       <div class="container">
-        <p class="eyebrow">The seven days</p>
+        <p class="eyebrow">The eight days</p>
         <h2>What you will learn</h2>
         <ol class="days">
           {days.map((d) => (
@@ -93,24 +97,47 @@ const faqs = [
       </div>
     </section>
 
-    <section class="section alt" id="join">
+    <section class="section band" id="join">
       <div class="container two">
         <div class="prose">
           <p class="eyebrow">Join</p>
-          <h2>Begin the course</h2>
-          <p>Enter your name and email address. The first lesson arrives straight away, and one lesson follows each day for seven days.</p>
-          <p class="small-print">We will only use your email to send the course and occasional news from Shiva Swarodaya. You can unsubscribe at any time. See our <a href={u('/privacy')}>privacy policy</a>.</p>
+          <h2>Register for the free course</h2>
+          <p>Registration takes a minute. A welcome email arrives straight away, and then each morning an email with the link to that day’s lesson, for eight days.</p>
+          <p class="small-print">Your details are kept in our own student register and used only for the course and occasional news. Our email service, Brevo, receives only your first name and email address. You can unsubscribe at any time.</p>
         </div>
-        <form class="signup" id="signup-form" novalidate>
+        <form class="signup" id="signup-form" data-endpoint={formEndpoint} novalidate>
+          <input type="hidden" name="form" value="register" />
           <div class="field">
-            <label for="su-name">Your name</label>
-            <input id="su-name" name="name" type="text" autocomplete="given-name" required />
+            <label for="su-name">First name</label>
+            <input id="su-name" name="firstname" type="text" autocomplete="given-name" required />
           </div>
           <div class="field">
             <label for="su-email">Email address</label>
-            <input id="su-email" name="email" type="email" autocomplete="email" required aria-describedby="su-status" />
+            <input id="su-email" name="email" type="email" autocomplete="email" required />
           </div>
-          <button type="submit" class="btn btn-primary">Send me Day 1</button>
+          <div class="field">
+            <label for="su-country">Country</label>
+            <input id="su-country" name="country" type="text" autocomplete="country-name" required />
+          </div>
+          <div class="field">
+            <label for="su-wa">WhatsApp number <span class="opt">(optional)</span></label>
+            <input id="su-wa" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="+91 …" />
+          </div>
+          <div class="field">
+            <label for="su-exp">Your experience of yoga</label>
+            <select id="su-exp" name="experience">
+              <option>New to yoga</option>
+              <option>Some yoga or meditation</option>
+              <option>Regular practice</option>
+              <option>Yoga teacher</option>
+            </select>
+          </div>
+          <label class="consent">
+            <input id="su-consent" name="consent" type="checkbox" value="yes" required />
+            <span>I agree to receive the course emails and occasional news from Shiva Swarodaya, as described in the <a href={u('/privacy')}>privacy policy</a>. I can unsubscribe at any time.</span>
+          </label>
+          <div class="hp" aria-hidden="true"><label>Leave this empty <input name="website" tabindex="-1" autocomplete="off" /></label></div>
+          <button type="submit" class="btn btn-primary">Register for the free course</button>
           <p id="su-status" class="status" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -133,18 +160,31 @@ const faqs = [
 </Base>
 
 <script>
-  // Placeholder until an email service is connected (see Tracker A-08).
+  // Sends the registration to the Google Sheet (formEndpoint in src/data/site.ts),
+  // which passes it to Brevo for the course emails. Without an endpoint it only shows a preview message.
   const form = document.getElementById('signup-form') as HTMLFormElement | null;
   const status = document.getElementById('su-status');
-  form?.addEventListener('submit', (e) => {
+  const say = (t: string) => { if (status) status.textContent = t; };
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const email = form.querySelector<HTMLInputElement>('#su-email');
-    if (!email?.value || !email.checkValidity()) {
-      if (status) status.textContent = 'Please enter a valid email address.';
-      email?.focus();
+    const bad = Array.from(form.querySelectorAll<HTMLInputElement>('[required]')).find((el) => (el.type === 'checkbox' ? !el.checked : !el.value.trim() || !el.checkValidity()));
+    if (bad) {
+      say(bad.type === 'checkbox' ? 'Please tick the box to agree to receive the course emails.' : 'Please fill in your first name, a valid email address and your country.');
+      bad.focus();
       return;
     }
-    if (status) status.textContent = 'Thank you. (Preview only: sign-up is not connected yet.)';
+    const url = form.dataset.endpoint;
+    if (!url) { say('Thank you. (Preview only: registration is not connected yet.)'); return; }
+    const button = form.querySelector('button'); if (button) button.disabled = true;
+    say('Sending…');
+    try {
+      const data = new URLSearchParams(new FormData(form) as any); data.set('page', location.pathname);
+      await fetch(url, { method: 'POST', mode: 'no-cors', body: data });
+      form.reset();
+      say('Thank you. The welcome email is on its way. If it has not arrived in a few minutes, please look in your spam or promotions folder.');
+    } catch {
+      say('Sorry, that did not go through. Please check your connection and try again.');
+    } finally { if (button) button.disabled = false; }
   });
 </script>
 
@@ -158,7 +198,6 @@ const faqs = [
 
   .days { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .days li { display: grid; grid-template-columns: 44px 1fr; gap: 14px; background: var(--stone); border: 1px solid var(--rule); border-radius: 12px; padding: 20px; }
-  .days li:last-child { grid-column: 1 / -1; }
   .num { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--gold-line); font: 400 18px/1 var(--font-display); color: var(--kumkum); }
   .days h3 { margin: 6px 0 6px; font-size: 21px; }
   .days p { margin: 0 0 8px; color: var(--muted); font-size: 16px; }
@@ -171,8 +210,13 @@ const faqs = [
   .signup { display: grid; gap: 16px; background: var(--stone); border: 1px solid var(--rule); border-radius: 14px; padding: 24px; }
   .field { display: grid; gap: 6px; }
   .field label { font: 500 14px/1.2 var(--font-ui); color: var(--ink); }
-  .field input { font: 400 16px/1.4 var(--font-ui); padding: 12px 14px; min-height: 46px; border: 1px solid var(--gold-line); border-radius: 10px; background: #FFFDF8; color: var(--ink); }
-  .field input:focus-visible { outline: 2px solid var(--gold-text); outline-offset: 2px; }
+  .field input { font: 400 16px/1.4 var(--font-ui); padding: 12px 14px; min-height: 46px; border: 1px solid var(--gold-line); border-radius: 10px; background: #FFFDF8; color: #2B1D1A; }
+  .field input:focus-visible, .field select:focus-visible { outline: 2px solid var(--gold-text); outline-offset: 2px; }
+  .field select { font: 400 16px/1.4 var(--font-ui); padding: 12px 14px; min-height: 46px; border: 1px solid var(--gold-line); border-radius: 10px; background: #FFFDF8; color: #2B1D1A; }
+  .opt { font-weight: 400; color: var(--muted); }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .consent { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; font: 400 14px/1.5 var(--font-ui); color: var(--muted); }
+  .consent input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--kumkum); }
   .signup .btn { justify-self: start; border: 0; cursor: pointer; }
   .status { margin: 0; min-height: 1.4em; font: 400 14px/1.4 var(--font-ui); color: var(--kumkum); }
 

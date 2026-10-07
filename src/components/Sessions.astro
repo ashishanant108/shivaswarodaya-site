@@ -1,0 +1,104 @@
+---
+/**
+ * Upcoming sessions, read live from a published Google Sheet (Tracker A-97).
+ *
+ * The sheet has one row per session with these columns (the header row must
+ * use these names; extra columns are ignored):
+ *   Date | Time | Title | Type | Mode | Link | Notes | Show
+ *   - Date: e.g. 2026-10-18 or 18/10/2026 (day first). Leave empty for a
+ *           repeating session and describe it in "Time", e.g. "Every Sunday, 7 pm IST".
+ *   - Mode: Online / In person
+ *   - Link: joining or details link (optional)
+ *   - Show: type No to hide a row without deleting it
+ * In Google Sheets: File → Share → Publish to web → the sheet → CSV, then paste
+ * the link into calendarSheetCsv in src/data/site.ts. Changes in the sheet
+ * appear on the site within a few minutes, with no rebuild.
+ */
+import { calendarSheetCsv } from '../data/site';
+interface Props { limit?: number; headingLevel?: 'h2' | 'h3' }
+const { limit = 0, headingLevel = 'h3' } = Astro.props;
+---
+<div class="sessions" data-sheet={calendarSheetCsv} data-limit={limit} data-h={headingLevel}>
+  <ol class="list" hidden></ol>
+  <div class="empty-slot"><slot /></div>
+</div>
+
+<script>
+  type Row = Record<string, string>;
+  function parseCsv(text: string): string[][] {
+    const rows: string[][] = []; let row: string[] = []; let f = ''; let q = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (q) {
+        if (c === '"' && text[i + 1] === '"') { f += '"'; i++; }
+        else if (c === '"') q = false;
+        else f += c;
+      } else if (c === '"') q = true;
+      else if (c === ',') { row.push(f); f = ''; }
+      else if (c === '\n' || c === '\r') {
+        if (c === '\r' && text[i + 1] === '\n') i++;
+        row.push(f); rows.push(row); row = []; f = '';
+      } else f += c;
+    }
+    if (f || row.length) { row.push(f); rows.push(row); }
+    return rows.filter((r) => r.some((x) => x.trim()));
+  }
+  function parseDate(s: string): Date | null {
+    s = s.trim(); if (!s) return null;
+    let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+    if (m) return new Date(Date.UTC(+m[1], +m[2] - 1, +m[3]));
+    m = s.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/);       // day first, as in India
+    if (m) return new Date(Date.UTC(+m[3], +m[2] - 1, +m[1]));
+    const t = Date.parse(s + ' UTC'); return isNaN(t) ? null : new Date(t);
+  }
+  const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
+  const fmt = (d: Date, o: Intl.DateTimeFormatOptions) => d.toLocaleDateString('en-IN', { ...o, timeZone: 'UTC' });
+
+  document.querySelectorAll<HTMLElement>('.sessions').forEach(async (box) => {
+    const url = box.dataset.sheet; if (!url) return;
+    const limit = +(box.dataset.limit || 0); const h = box.dataset.h || 'h3';
+    try {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) return;
+      const [head, ...body] = parseCsv(await res.text());
+      const keys = head.map((k) => k.trim().toLowerCase());
+      const rows: Row[] = body.map((r) => Object.fromEntries(keys.map((k, i) => [k, (r[i] || '').trim()])));
+      const nowIst = new Date(Date.now() + 5.5 * 3600e3); const today = Date.UTC(nowIst.getUTCFullYear(), nowIst.getUTCMonth(), nowIst.getUTCDate());
+      let items = rows
+        .filter((r) => r.title && !/^no$/i.test(r.show || ''))
+        .map((r) => ({ r, d: parseDate(r.date || '') }))
+        .filter((x) => !x.d || +x.d >= today)
+        .sort((a, b) => (a.d ? +a.d : -1) - (b.d ? +b.d : -1));   // repeating sessions first
+      if (limit) items = items.slice(0, limit);
+      if (!items.length) return;
+      const list = box.querySelector<HTMLOListElement>('.list')!;
+      list.innerHTML = items.map(({ r, d }) => {
+        const date = d
+          ? `<time class="date" datetime="${d.toISOString().slice(0, 10)}"><span class="d">${fmt(d, { day: 'numeric' })}</span><span class="m">${fmt(d, { month: 'short' })}</span><span class="y">${fmt(d, { year: 'numeric' })}</span></time>`
+          : `<span class="date repeat" aria-hidden="true"><span class="m">Weekly</span></span>`;
+        const meta = [r.type, r.mode, r.time].filter(Boolean).map(esc).join(' · ');
+        const link = /^https?:\/\//i.test(r.link || '') ? `<a class="btn btn-ghost btn-sm" href="${esc(r.link)}" target="_blank" rel="noopener">${/online/i.test(r.mode || '') ? 'Join' : 'Details'}<span class="sr-only"> ${esc(r.title)} (opens in a new tab)</span></a>` : '';
+        return `<li>${date}<div class="info">${meta ? `<p class="meta">${meta}</p>` : ''}<${h}>${esc(r.title)}</${h}>${r.notes ? `<p class="notes">${esc(r.notes)}</p>` : ''}</div>${link}</li>`;
+      }).join('');
+      list.hidden = false;
+      box.querySelector<HTMLElement>('.empty-slot')!.hidden = true;
+    } catch { /* keep the empty message */ }
+  });
+</script>
+
+<style>
+  .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .list :global(li) { display: grid; grid-template-columns: 76px 1fr auto; gap: 20px; align-items: center; background: var(--stone); border: 1px solid var(--rule); border-radius: 14px; padding: 16px 20px; }
+  .list :global(.date) { display: grid; justify-items: center; align-content: center; min-height: 76px; border-radius: 12px; background: var(--maroon); color: #F4E9D8; padding: 8px 4px; }
+  .list :global(.date .d) { font: 400 28px/1 var(--font-display); }
+  .list :global(.date .m) { font: 500 12px/1.4 var(--font-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--gold-light); }
+  .list :global(.date .y) { font: 400 12px/1.2 var(--font-ui); color: #CDB8A0; }
+  .list :global(.info h2), .list :global(.info h3) { font-size: clamp(19px, 2vw, 22px); margin: 0; }
+  .list :global(.meta) { margin: 0 0 4px; font: 500 12px/1.4 var(--font-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--gold-text); }
+  .list :global(.notes) { margin: 4px 0 0; font-size: 15px; color: var(--muted); }
+  .list :global(.sr-only) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  @media (max-width: 560px) {
+    .list :global(li) { grid-template-columns: 64px 1fr; }
+    .list :global(.btn) { grid-column: 1 / -1; justify-self: start; }
+  }
+</style>
